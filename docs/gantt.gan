@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Newborn Screening Data" company="FHIRfighters" webLink="https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR" view-date="2017-10-03" view-index="0" gantt-divider-location="530" resource-divider-location="300" version="2.8.4" locale="en_US">
+    <description><![CDATA[The Utah Newborn Screening Program collects a variety of demographic data from the screening specimen that is sent in for a newborn. Often the data collected is missing or inaccurate. In order to complete the data and/or ensure accuracy, the Utah Newborn Screening Program compares this data against the Utah Office of Vital Records and Statistics data from birth and death certificates. The current process is antiquated and would benefit from the usage of a newer technology like FHIR.
+
+This application provides an FHIR interface to compare the data between the Utah Newborn Screening Program and the Utah Office of Vital Records and Statistics, including:
+
+date of birth
+full name
+gestational age
+date of death
+birth weight
+congenital defects
+race
+ethnicity
+gender
+mother's full name
+mother's date of birth]]></description>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="304" order="0"/>
+        <field id="tpd4" name="Begin date" width="56" order="1"/>
+        <field id="tpd5" name="End date" width="53" order="2"/>
+        <field id="tpd6" name="Duration" width="36" order="4"/>
+        <field id="tpd13" name="Resources" width="77" order="3"/>
+        <option id="color.recent"><![CDATA[#ff0000]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Requirements Engineering" meeting="false" start="2017-10-01" duration="7" complete="0" expand="true">
+            <depend id="21" type="2" difference="0" hardness="Strong"/>
+            <task id="5" name="Communicate with external mentor" color="#8cb6ce" meeting="false" start="2017-10-01" duration="4" complete="0" expand="true">
+                <depend id="6" type="2" difference="0" hardness="Strong"/>
+                <depend id="8" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="6" name="Draft Gantt chart estimate" color="#8cb6ce" meeting="false" start="2017-10-05" duration="2" complete="0" expand="true"/>
+            <task id="7" name="Research topic" color="#8cb6ce" meeting="false" start="2017-10-01" duration="5" complete="0" expand="true">
+                <depend id="8" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="8" name="Draft and record D1 presentation" color="#8cb6ce" meeting="false" start="2017-10-06" duration="2" complete="0" expand="true"/>
+        </task>
+        <task id="21" name="System Design" meeting="false" start="2017-10-08" duration="14" complete="0" expand="true">
+            <task id="26" name="Define functional requirements" color="#8cb6ce" meeting="false" start="2017-10-08" duration="3" complete="0" expand="true">
+                <depend id="28" type="2" difference="0" hardness="Strong"/>
+                <depend id="32" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="28" name="Design data model" color="#8cb6ce" meeting="false" start="2017-10-11" duration="4" complete="0" expand="true">
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="30" name="Design architecture" color="#8cb6ce" meeting="false" start="2017-10-15" duration="4" complete="0" expand="true">
+                <depend id="38" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="32" name="Develop user stories" color="#8cb6ce" meeting="false" start="2017-10-11" duration="2" complete="0" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="34" name="Mock up user flows" color="#8cb6ce" meeting="false" start="2017-10-13" duration="3" complete="0" expand="true">
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="36" name="Mock up screens and actions" color="#8cb6ce" meeting="false" start="2017-10-16" duration="3" complete="0" expand="true">
+                <depend id="38" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="38" name="Draft and record D2 presentation" color="#8cb6ce" meeting="false" start="2017-10-19" duration="3" complete="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="4" name="Allan" function="1" contacts="" phone=""/>
+        <resource id="5" name="Enrique" function="3" contacts="" phone=""/>
+        <resource id="6" name="Phillip" function="2" contacts="" phone=""/>
+        <resource id="7" name="Reed" function="3" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="5" resource-id="4" function="1" responsible="true" load="10.0"/>
+        <allocation task-id="6" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="4" function="1" responsible="false" load="10.0"/>
+        <allocation task-id="8" resource-id="4" function="1" responsible="false" load="20.0"/>
+        <allocation task-id="26" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="28" resource-id="4" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="30" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="38" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="26" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="30" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="38" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="8" resource-id="6" function="2" responsible="true" load="100.0"/>
+        <allocation task-id="26" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="32" resource-id="6" function="2" responsible="true" load="100.0"/>
+        <allocation task-id="34" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="36" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="38" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="7" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="8" resource-id="7" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="26" resource-id="7" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="32" resource-id="7" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="34" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="38" resource-id="7" function="3" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles>
+        <role id="1" name="PM"/>
+        <role id="2" name="QA"/>
+        <role id="3" name="DEV"/>
+    </roles>
+</project>
