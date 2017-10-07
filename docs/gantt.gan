@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Newborn Screening Data" company="FHIRfighters" webLink="https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR" view-date="2017-10-03" view-index="0" gantt-divider-location="530" resource-divider-location="300" version="2.8.4" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Newborn Screening Data" company="FHIRfighters" webLink="https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR" view-date="2017-10-01" view-index="0" gantt-divider-location="510" resource-divider-location="300" version="2.8.4" locale="en_US">
     <description><![CDATA[The Utah Newborn Screening Program collects a variety of demographic data from the screening specimen that is sent in for a newborn. Often the data collected is missing or inaccurate. In order to complete the data and/or ensure accuracy, the Utah Newborn Screening Program compares this data against the Utah Office of Vital Records and Statistics data from birth and death certificates. The current process is antiquated and would benefit from the usage of a newer technology like FHIR.
 
 This application provides an FHIR interface to compare the data between the Utah Newborn Screening Program and the Utah Office of Vital Records and Statistics, including:
@@ -14,12 +14,11 @@ ethnicity
 gender
 mother's full name
 mother's date of birth]]></description>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Name" width="304" order="0"/>
-        <field id="tpd4" name="Begin date" width="56" order="1"/>
-        <field id="tpd5" name="End date" width="53" order="2"/>
-        <field id="tpd6" name="Duration" width="36" order="4"/>
-        <field id="tpd13" name="Resources" width="77" order="3"/>
+    <view zooming-state="default:5" id="gantt-chart">
+        <field id="tpd3" name="Name" width="301" order="0"/>
+        <field id="tpd4" name="Begin date" width="52" order="1"/>
+        <field id="tpd5" name="End date" width="49" order="2"/>
+        <field id="tpd13" name="Resources" width="104" order="3"/>
         <option id="color.recent"><![CDATA[#ff0000]]></option>
     </view>
     <view id="resource-table">
@@ -50,19 +49,20 @@ mother's date of birth]]></description>
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Requirements Engineering" meeting="false" start="2017-10-01" duration="7" complete="0" expand="true">
+        <task id="0" name="Requirements Engineering" meeting="false" start="2017-10-01" duration="7" complete="84" expand="true">
             <depend id="21" type="2" difference="0" hardness="Strong"/>
-            <task id="5" name="Communicate with external mentor" color="#8cb6ce" meeting="false" start="2017-10-01" duration="4" complete="0" expand="true">
+            <task id="5" name="Communicate with external mentor" color="#8cb6ce" meeting="false" start="2017-10-01" duration="4" complete="50" expand="true">
                 <depend id="6" type="2" difference="0" hardness="Strong"/>
                 <depend id="8" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="6" name="Draft Gantt chart estimate" color="#8cb6ce" meeting="false" start="2017-10-05" duration="2" complete="0" expand="true"/>
-            <task id="7" name="Research topic" color="#8cb6ce" meeting="false" start="2017-10-01" duration="5" complete="0" expand="true">
+            <task id="6" name="Draft Gantt chart estimate" color="#8cb6ce" meeting="false" start="2017-10-05" duration="2" complete="100" expand="true"/>
+            <task id="7" name="Research topic" color="#8cb6ce" meeting="false" start="2017-10-01" duration="5" complete="100" expand="true">
                 <depend id="8" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="8" name="Draft and record D1 presentation" color="#8cb6ce" meeting="false" start="2017-10-06" duration="2" complete="0" expand="true"/>
+            <task id="8" name="Draft and record D1 presentation" color="#8cb6ce" meeting="false" start="2017-10-06" duration="2" complete="100" expand="true"/>
         </task>
         <task id="21" name="System Design" meeting="false" start="2017-10-08" duration="14" complete="0" expand="true">
+            <depend id="39" type="2" difference="0" hardness="Strong"/>
             <task id="26" name="Define functional requirements" color="#8cb6ce" meeting="false" start="2017-10-08" duration="3" complete="0" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
                 <depend id="32" type="2" difference="0" hardness="Strong"/>
@@ -84,6 +84,76 @@ mother's date of birth]]></description>
             </task>
             <task id="38" name="Draft and record D2 presentation" color="#8cb6ce" meeting="false" start="2017-10-19" duration="3" complete="0" expand="true"/>
         </task>
+        <task id="39" name="Development Sprint I" meeting="false" start="2017-10-22" duration="21" complete="0" expand="true">
+            <depend id="248" type="2" difference="0" hardness="Strong"/>
+            <task id="42" name="DevOps" meeting="false" start="2017-10-22" duration="18" complete="0" expand="true">
+                <depend id="181" type="2" difference="0" hardness="Strong"/>
+                <task id="50" name="Set up web application framework" color="#8cb6ce" meeting="false" start="2017-10-22" duration="3" complete="0" expand="true">
+                    <depend id="57" type="2" difference="0" hardness="Strong"/>
+                    <depend id="74" type="2" difference="0" hardness="Strong"/>
+                    <depend id="75" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="51" name="Provision application resources" color="#8cb6ce" meeting="false" start="2017-10-30" duration="5" complete="0" expand="true">
+                    <depend id="53" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="57" name="Containerize application" color="#8cb6ce" meeting="false" start="2017-10-25" duration="5" complete="0" expand="true">
+                    <depend id="51" type="2" difference="0" hardness="Strong"/>
+                    <depend id="53" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="53" name="Establish integration/deploy pipeline" color="#8cb6ce" meeting="false" start="2017-11-04" duration="5" complete="0" expand="true"/>
+            </task>
+            <task id="44" name="Back-end" meeting="false" start="2017-10-25" duration="15" complete="0" expand="true">
+                <depend id="181" type="2" difference="0" hardness="Strong"/>
+                <task id="75" name="Create data models" color="#8cb6ce" meeting="false" start="2017-10-25" duration="5" complete="0" expand="true">
+                    <depend id="63" type="2" difference="0" hardness="Strong"/>
+                    <depend id="76" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="76" name="Create controllers and services" color="#8cb6ce" meeting="false" start="2017-10-30" duration="4" complete="0" expand="true">
+                    <depend id="71" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="71" name="Add authentication/authorization" color="#8cb6ce" meeting="false" start="2017-11-03" duration="3" complete="0" expand="true">
+                    <depend id="65" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="63" name="Add unit tests" color="#8cb6ce" meeting="false" start="2017-10-30" duration="4" complete="0" expand="true"/>
+                <task id="65" name="Add integration tests" color="#8cb6ce" meeting="false" start="2017-11-06" duration="3" complete="0" expand="true"/>
+            </task>
+            <task id="46" name="Front-end" meeting="false" start="2017-10-25" duration="15" complete="0" expand="true">
+                <depend id="181" type="2" difference="0" hardness="Strong"/>
+                <task id="74" name="Set up framework and templates" color="#8cb6ce" meeting="false" start="2017-10-25" duration="2" complete="0" expand="true">
+                    <depend id="77" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="77" name="Create main page/screen" color="#8cb6ce" meeting="false" start="2017-10-27" duration="5" complete="0" expand="true">
+                    <depend id="79" type="2" difference="0" hardness="Strong"/>
+                    <depend id="81" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="79" name="Create auxiliary screens" color="#8cb6ce" meeting="false" start="2017-11-01" duration="3" complete="0" expand="true">
+                    <depend id="81" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="81" name="Integrate screens and user flow" color="#8cb6ce" meeting="false" start="2017-11-04" duration="3" complete="0" expand="true">
+                    <depend id="83" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="83" name="Add acceptance tests" color="#8cb6ce" meeting="false" start="2017-11-07" duration="2" complete="0" expand="true"/>
+            </task>
+            <task id="181" name="Draft and record D3 presentation" color="#8cb6ce" meeting="false" start="2017-11-09" duration="3" complete="0" expand="true"/>
+        </task>
+        <task id="248" name="Development Sprint II" meeting="false" start="2017-11-12" duration="21" complete="0" expand="true">
+            <task id="255" name="Feature revisions from feedback" color="#8cb6ce" meeting="false" start="2017-11-12" duration="12" complete="0" expand="true">
+                <depend id="263" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="257" name="Debugging" color="#8cb6ce" meeting="false" start="2017-11-12" duration="12" complete="0" expand="true">
+                <depend id="263" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="259" name="Quality assurance" color="#8cb6ce" meeting="false" start="2017-11-12" duration="12" complete="0" expand="true">
+                <depend id="263" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="261" name="Add final touches" color="#8cb6ce" meeting="false" start="2017-11-12" duration="12" complete="0" expand="true">
+                <depend id="263" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="263" name="Deploy final product" color="#8cb6ce" meeting="false" start="2017-11-24" duration="2" complete="0" expand="true">
+                <depend id="265" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="265" name="Draft and record D4/D5 presentation" color="#8cb6ce" meeting="false" start="2017-11-26" duration="7" complete="0" expand="true"/>
+        </task>
     </tasks>
     <resources>
         <resource id="4" name="Allan" function="1" contacts="" phone=""/>
@@ -100,12 +170,27 @@ mother's date of birth]]></description>
         <allocation task-id="28" resource-id="4" function="1" responsible="false" load="100.0"/>
         <allocation task-id="30" resource-id="4" function="1" responsible="true" load="100.0"/>
         <allocation task-id="38" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="81" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="50" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="51" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="57" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="53" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="181" resource-id="4" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="255" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="263" resource-id="4" function="1" responsible="true" load="100.0"/>
+        <allocation task-id="265" resource-id="4" function="1" responsible="false" load="100.0"/>
         <allocation task-id="7" resource-id="5" function="3" responsible="true" load="100.0"/>
         <allocation task-id="8" resource-id="5" function="3" responsible="false" load="100.0"/>
         <allocation task-id="26" resource-id="5" function="3" responsible="false" load="100.0"/>
         <allocation task-id="28" resource-id="5" function="3" responsible="true" load="100.0"/>
         <allocation task-id="30" resource-id="5" function="3" responsible="false" load="100.0"/>
         <allocation task-id="38" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="75" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="76" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="71" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="181" resource-id="5" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="257" resource-id="5" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="265" resource-id="5" function="3" responsible="false" load="100.0"/>
         <allocation task-id="7" resource-id="6" function="2" responsible="false" load="100.0"/>
         <allocation task-id="8" resource-id="6" function="2" responsible="true" load="100.0"/>
         <allocation task-id="26" resource-id="6" function="2" responsible="false" load="100.0"/>
@@ -113,6 +198,12 @@ mother's date of birth]]></description>
         <allocation task-id="34" resource-id="6" function="2" responsible="false" load="100.0"/>
         <allocation task-id="36" resource-id="6" function="2" responsible="false" load="100.0"/>
         <allocation task-id="38" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="63" resource-id="6" function="2" responsible="true" load="100.0"/>
+        <allocation task-id="65" resource-id="6" function="2" responsible="true" load="50.0"/>
+        <allocation task-id="83" resource-id="6" function="2" responsible="true" load="50.0"/>
+        <allocation task-id="181" resource-id="6" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="259" resource-id="6" function="2" responsible="true" load="100.0"/>
+        <allocation task-id="265" resource-id="6" function="2" responsible="false" load="100.0"/>
         <allocation task-id="7" resource-id="7" function="3" responsible="false" load="100.0"/>
         <allocation task-id="8" resource-id="7" function="3" responsible="false" load="100.0"/>
         <allocation task-id="26" resource-id="7" function="3" responsible="false" load="100.0"/>
@@ -120,6 +211,12 @@ mother's date of birth]]></description>
         <allocation task-id="34" resource-id="7" function="3" responsible="true" load="100.0"/>
         <allocation task-id="36" resource-id="7" function="3" responsible="true" load="100.0"/>
         <allocation task-id="38" resource-id="7" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="74" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="77" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="79" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="181" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="261" resource-id="7" function="3" responsible="true" load="100.0"/>
+        <allocation task-id="265" resource-id="7" function="3" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <previous/>
