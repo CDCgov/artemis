@@ -43,7 +43,7 @@ and run it. Otherwise, you can run the app locally by running:
 
 ## How to Test
 
-The test suite uses [RSpec][rspec] and can be run using `bin/rake`.
+The test suite uses [RSpec][rspec] and can be run using `bin/test`.
 
 [docker]:   https://docker.com
 [rspec]:    https://rspec.info
