@@ -41,7 +41,12 @@ and run it. Otherwise, you can run the app locally by running:
 - `bin/setup`
 - `bin/rails server`
 
+## How to Test
+
+The test suite uses [RSpec][rspec] and can be run using `bin/rake`.
+
 [docker]:   https://docker.com
+[rspec]:    https://rspec.info
 [rails]:    https://rubyonrails.org
 [ruby]:     https://www.ruby-lang.org
 [postgres]: https://www.postgresql.org
