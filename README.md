@@ -29,4 +29,19 @@ including:
 
 ## How to Run
 
-TBD
+This is a [Rails v5.1.4][rails] application that requires:
+
+- [Ruby v2.3.5][ruby]
+- [PostgreSQL >= v9.6][postgres]
+- [Docker >= 17.05][docker]
+
+For portability, you may use [Docker][docker] to containerize all dependencies
+and run it. Otherwise, you can run the app locally by running:
+
+- `bin/setup`
+- `bin/rails server`
+
+[docker]:   https://docker.com
+[rails]:    https://rubyonrails.org
+[ruby]:     https://www.ruby-lang.org
+[postgres]: https://www.postgresql.org
