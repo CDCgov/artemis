@@ -31,9 +31,10 @@ including:
 
 This is a [Rails v5.1.4][rails] application that requires:
 
+- [Docker >= 17.05][docker]
+- [Node.js >= 6.11.4][node]
 - [Ruby v2.3.5][ruby]
 - [PostgreSQL >= v9.6][postgres]
-- [Docker >= 17.05][docker]
 
 For portability, you may use [Docker][docker] to containerize all dependencies
 and run it. Otherwise, you can run the app locally by running:
@@ -46,6 +47,7 @@ and run it. Otherwise, you can run the app locally by running:
 The test suite uses [RSpec][rspec] and can be run using `bin/test`.
 
 [docker]:   https://docker.com
+[node]:     https://nodejs.org
 [rspec]:    https://rspec.info
 [rails]:    https://rubyonrails.org
 [ruby]:     https://www.ruby-lang.org
