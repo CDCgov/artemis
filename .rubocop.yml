@@ -1,0 +1,34 @@
+AllCops:
+  Include:
+    - '**/*.rake'
+    - '**/config.ru'
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - '**/Capfile'
+    - '**/Guardfile'
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+    - 'bin/**/*'
+  DisplayCopNames: true
+  DisplayStyleGuide: false
+  StyleGuideCopsOnly: false
+
+Rails:
+  Enabled: true
+
+Documentation:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
