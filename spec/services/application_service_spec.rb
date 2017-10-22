@@ -39,7 +39,7 @@ RSpec.describe ApplicationService, type: :service do
       end
 
       it 'does not raise on error' do
-        expect { subclass.call 42.0 }.to_not raise_error(ArgumentError)
+        expect { subclass.call 42.0 }.to_not raise_error
       end
     end
   end
