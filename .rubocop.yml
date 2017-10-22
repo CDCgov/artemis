@@ -30,6 +30,9 @@ Metrics/BlockLength:
 Style/BlockComments:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
