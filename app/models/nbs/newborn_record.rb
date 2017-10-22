@@ -20,6 +20,10 @@ class NBS::NewbornRecord < ActiveHash::Base
       Rails.root.join('data', 'NBS_data.csv')
     end
 
+    def format_date(string)
+      Date.strptime(string, '%m/%d/%Y') rescue nil # rubocop:disable Style/RescueModifier, Metrics/LineLength
+    end
+
     def format_headers(hash = {})
       hash.tap do |h|
         # Re-map headers
@@ -29,9 +33,9 @@ class NBS::NewbornRecord < ActiveHash::Base
         h[:mothers_first_name]  = nil
         h[:sex]                 = h.delete :babys_sex
 
-        # Cast dates # rubocop:disable Style/RescueModifier
-        h[:birthdate]           = Date.parse h[:birthdate] rescue nil
-        h[:mothers_birthdate]   = Date.parse h[:mothers_birthdate] rescue nil
+        # Cast dates
+        h[:birthdate]           = format_date h[:birthdate]
+        h[:mothers_birthdate]   = format_date h[:mothers_birthdate]
 
         # NOTE: ID assignment assumes that there are no duplicate Kit ID_numbers
         h[:id]                  = h[:kit] || SecureRandom.uuid
