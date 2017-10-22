@@ -27,15 +27,21 @@ class BatchCompareService < ApplicationService
     datasets.permutation.each do |control, other|
       control.each do |record|
         linked = find(record, other)
-        differences = linked ? compare(record, linked) : []
-        differences.each_key { |field| conflicts[record.id].add(field) }
+        diffs = linked ? compare(record, linked) : []
+        diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
       end
     end
-
     conflicts
   end
 
   private
+
+  def choose_id(*records)
+    uuid_regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/ # rubocop:disable Metrics/LineLength
+    ids = records.map(&:id).compact
+    without_uuid = ids.reject { |id| uuid_regex.match?(id) }
+    without_uuid.empty? ? ids.first : without_uuid.first
+  end
 
   def compare(record, other)
     difference = record.attributes.to_a - other.attributes.to_a
