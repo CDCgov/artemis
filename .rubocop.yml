@@ -11,6 +11,7 @@ AllCops:
     - 'db/migrate/*'
     - 'db/schema.rb'
     - 'bin/**/*'
+    - 'node_modules/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: false
   StyleGuideCopsOnly: false
@@ -20,6 +21,11 @@ Rails:
 
 Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*
 
 Style/BlockComments:
   Enabled: false
