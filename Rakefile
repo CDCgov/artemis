@@ -2,9 +2,12 @@
 # lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative 'config/application'
-require 'rubocop/rake_task'
 
 Rails.application.load_tasks
-RuboCop::RakeTask.new(:rubocop) do |t|
-  t.options = ['--display-cop-names']
+
+if Rails.env.development?
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new(:rubocop) do |t|
+    t.options = ['--display-cop-names']
+  end
 end
