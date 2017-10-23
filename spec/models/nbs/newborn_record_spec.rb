@@ -7,9 +7,9 @@ RSpec.describe NBS::NewbornRecord, type: :model do
     first = described_class.first
     expect(first.attributes).to eq(
       id: 'UT850A001',
-      birth_length: nil,
+      birth_length: 27,
       birth_weight: 3255,
-      birthdate: Date.new(2015, 2, 3),
+      birthdate: Date.new(2015, 3, 2),
       first_name: nil,
       kit: 'UT850A001',
       last_name: nil,
