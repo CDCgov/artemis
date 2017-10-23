@@ -73,6 +73,9 @@ class BatchCompareService < ApplicationService
     maybe_matches = matches.to_a.select { |other| other.send(field) == value }
     return find(record, matches, fields) if maybe_matches.empty?
 
+    # Early return if one match found
+    return maybe_matches.first if maybe_matches.length == 1
+
     find(record, maybe_matches, fields)
   end
 end
