@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @report.type %></h1>
+<h2>Created <%= @report.created_at %></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kit ID #</th>
+      <th>Conflicts Detected</th>
+      <th>NBS</th>
+      <th>OVRS</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% (@report.data['conflicts'].to_a || []).each do |id, fields| %>
+      <tr>
+        <td><%= id %></td>
+        <td><%= render_newborn_record(NBS::NewbornRecord.find_by_id(id), fields) %>
+        <td><%= render_newborn_record(OVRS::NewbornRecord.find_by_id(id), fields) %>
+        <td><%= fields.join("<br />").html_safe %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td colspan="2">
+        <strong>
+          <%= (@report.data['conflicts'] || []).length %> discrepancies detected
+        </strong>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<%= link_to 'Back', reports_path %>
+<%= link_to 'Latest Report', latest_reports_path %>
