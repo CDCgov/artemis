@@ -17,6 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '~> 3.0.2'
 
 group :development, :test do
+  gem 'annotate'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop', require: false
 end
