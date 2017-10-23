@@ -4,5 +4,5 @@ Rails.application.routes.draw do
       get :latest
     end
   end
-  root to: redirect(path: '/reports/latest')
+  root to: redirect(path: '/reports')
 end
