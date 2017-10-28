@@ -10,7 +10,12 @@ class OVRS::NewbornRecord < ActiveHash::Base
   private_class_method :new
 
   class << self
+    def collection_cache_key
+      "ovrs/#{File.mtime(csv_file).to_i}"
+    end
+
     def reload
+      Rails.cache.delete collection_cache_key
       self.data = source
       true
     end
@@ -37,7 +42,9 @@ class OVRS::NewbornRecord < ActiveHash::Base
         h[:mothers_last_name]   = h.delete :momlast
         h[:multiple_birth]      = h.delete :plurality
         h[:sex]                 = h.delete :gender
-        h[:state_file_number]   = h.delete :statefilenumber
+
+        # Remove unneeded fields
+        h.delete :statefilenumber
 
         # Cast dates
         h[:birthdate]           = extract_date %i[birthccyy birthmm birthdd], h
@@ -49,7 +56,7 @@ class OVRS::NewbornRecord < ActiveHash::Base
     end
 
     def source
-      Rails.cache.fetch("ovrs/#{File.mtime(csv_file).to_i}") do
+      Rails.cache.fetch(collection_cache_key) do
         CSV.table(csv_file).map { |row| format_headers(row.to_hash) }
       end
     end

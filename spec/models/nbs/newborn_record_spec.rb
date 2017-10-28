@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe NBS::NewbornRecord, type: :model do
+  before { described_class.reload }
+
+  describe '.collection_cache_key' do
+    it 'returns a cacheable string' do
+      expect(described_class.collection_cache_key).to match /nbs\/\d+/
+    end
+  end
+
   it 'correctly loads the records from the CSV file' do
     expect(described_class.count).to eq 100
 

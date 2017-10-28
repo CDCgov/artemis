@@ -1,5 +1,5 @@
 class BatchCompareService < ApplicationService
-  attr_reader :datasets, :hierarchy, :omitted_fields
+  attr_reader :datasets, :hierarchy
 
   def initialize(options = {
     datasets:  [NBS::NewbornRecord.all, OVRS::NewbornRecord.all],
@@ -16,15 +16,11 @@ class BatchCompareService < ApplicationService
       birth_weight
       birth_length
     ],
-    omitted_fields: %i[
-      state_file_number
-    ],
     requestor: 'system'
   })
     raise ArgumentError unless options[:datasets].length == 2
     @datasets       = options[:datasets]
     @hierarchy      = options[:hierarchy]
-    @omitted_fields = options[:omitted_fields]
     @requestor      = options[:requestor]
   end
 
@@ -43,10 +39,8 @@ class BatchCompareService < ApplicationService
     without_uuid.empty? ? ids.first : without_uuid.first
   end
 
-  def compare(record, other, omitted = [])
-    difference = (record.attributes.to_a - other.attributes.to_a).reject do |a|
-      omitted.include? a.first
-    end
+  def compare(record, other)
+    difference = record.attributes.to_a - other.attributes.to_a
     Hash[*difference.flatten]
   end
 
@@ -55,7 +49,7 @@ class BatchCompareService < ApplicationService
     datasets.permutation.each do |control, other|
       control.each do |record|
         linked = find(record, other)
-        diffs = linked ? compare(record, linked, omitted_fields) : []
+        diffs = linked ? compare(record, linked) : []
         diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
       end
     end

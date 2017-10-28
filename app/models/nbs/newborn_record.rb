@@ -9,7 +9,12 @@ class NBS::NewbornRecord < ActiveHash::Base
   private_class_method :new
 
   class << self
+    def collection_cache_key
+      "nbs/#{File.mtime(csv_file).to_i}"
+    end
+
     def reload
+      Rails.cache.delete collection_cache_key
       self.data = source
       true
     end
@@ -43,7 +48,7 @@ class NBS::NewbornRecord < ActiveHash::Base
     end
 
     def source
-      Rails.cache.fetch("nbs/#{File.mtime(csv_file).to_i}") do
+      Rails.cache.fetch(collection_cache_key) do
         CSV.table(csv_file).map { |row| format_headers(row.to_hash) }
       end
     end
