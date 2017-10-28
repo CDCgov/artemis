@@ -37,7 +37,7 @@ class BatchCompareService < ApplicationService
     datasets.permutation.each do |control, other|
       control.each do |record|
         linked = record.match other
-        diffs = linked ? compare(record, linked) : []
+        diffs = linked ? compare(record, linked) : {}
         diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
       end
     end
