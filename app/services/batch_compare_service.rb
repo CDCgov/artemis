@@ -3,19 +3,7 @@ class BatchCompareService < ApplicationService
 
   def initialize(options = {
     datasets:  [NBS::NewbornRecord.all, OVRS::NewbornRecord.all],
-    hierarchy: %i[
-      kit
-      birthdate
-      mothers_birthdate
-      mothers_last_name
-      mothers_first_name
-      sex
-      last_name
-      first_name
-      multiple_birth
-      birth_weight
-      birth_length
-    ],
+    hierarchy: CsvRecord::FIELD_HIERARCHY,
     requestor: 'system'
   })
     raise ArgumentError unless options[:datasets].length == 2
