@@ -5,7 +5,7 @@ RSpec.describe NBS::NewbornRecord, type: :model do
 
   describe '.collection_cache_key' do
     it 'returns a cacheable string' do
-      expect(described_class.collection_cache_key).to match /nbs\/\d+/
+      expect(described_class.collection_cache_key).to match %r{NBS\/\d+}
     end
   end
 

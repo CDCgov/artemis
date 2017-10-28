@@ -1,36 +1,15 @@
-# This class represents the data model interface with the Office of Vital
-# Records and Statistics source. Currently, this will pull directly from the CSV
-# file located in the <APP_ROOT>/data/ folder, but in the future, might be
-# adapted to accomodate a connection to the OVRS database.
-require 'csv'
+# Newborn records from the Office of Vital Records and Statistics (OVRS)
 
 # rubocop:disable Metrics/LineLength
-class OVRS::NewbornRecord < ActiveHash::Base
-  # We want to make the initializer private, since we can't yet create data
-  private_class_method :new
-
+class OVRS::NewbornRecord < CsvRecord
   class << self
-    def collection_cache_key
-      "ovrs/#{File.mtime(csv_file).to_i}"
-    end
-
-    def reload
-      Rails.cache.delete collection_cache_key
-      self.data = source
-      true
-    end
-
     private
-
-    def csv_file
-      Rails.root.join('data', 'OVRS_data.csv')
-    end
 
     def extract_date(fields = [], hash = {})
       Date.new(*fields.map { |field| hash.delete(field) }) rescue nil # rubocop:disable Style/RescueModifier
     end
 
-    def format_headers(hash = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def format_fields(hash = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       hash.tap do |h|
         # Re-map headers
         h[:birth_length]        = h.delete :childlengthcm
@@ -52,12 +31,6 @@ class OVRS::NewbornRecord < ActiveHash::Base
 
         # NOTE: ID assignment assumes that there are no duplicate Kit ID_numbers
         h[:id]                  = h[:kit] || SecureRandom.uuid
-      end
-    end
-
-    def source
-      Rails.cache.fetch(collection_cache_key) do
-        CSV.table(csv_file).map { |row| format_headers(row.to_hash) }
       end
     end
   end
