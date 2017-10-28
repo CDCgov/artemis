@@ -1,32 +1,34 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @report.type %></h1>
-<h2>Created <%= @report.created_at %></h2>
+<p>Created <%= @report.created_at %></p>
 
-<table>
+<table class="report-table">
   <thead>
     <tr>
-      <th>Kit ID #</th>
-      <th>Conflicts Detected</th>
+      <th>#</th>
+      <th>Kit ID</th>
+      <th>Attribute</th>
       <th>NBS</th>
       <th>OVRS</th>
     </tr>
   </thead>
 
   <tbody>
-    <% (@report.data['conflicts'].to_a || []).each do |id, fields| %>
+    <% @report.conflicts.each_with_index do |conflict, index| %>
       <tr>
-        <td><%= id %></td>
-        <td><%= render_newborn_record(NBS::NewbornRecord.find_by_id(id), fields) %>
-        <td><%= render_newborn_record(OVRS::NewbornRecord.find_by_id(id), fields) %>
-        <td><%= fields.join("<br />").html_safe %></td>
+        <td><%= index + 1 %></td>
+        <td><%= conflict.id %></td>
+        <td><%= simple_format conflict.fields.reject { |x| x == 'id'}.map(&:titlecase).join("\n") %></td>
+        <td><%= simple_format render_newborn_record(conflict.nbs, conflict.fields) %>
+        <td><%= simple_format render_newborn_record(conflict.ovrs, conflict.fields) %>
       </tr>
     <% end %>
   </tbody>
 
   <tfoot>
     <tr>
-      <td colspan="2">
+      <td colspan="5">
         <strong>
           <%= (@report.data['conflicts'] || []).length %> discrepancies detected
         </strong>
