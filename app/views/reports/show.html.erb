@@ -19,8 +19,8 @@
       <tr>
         <td><%= index + 1 %></td>
         <td><%= conflict.id %></td>
-        <td><%= render_newborn_record conflict.nbs, conflict.fields %>
-        <td><%= render_newborn_record conflict.ovrs, conflict.fields %>
+        <td><%= simple_format render_newborn_record(conflict.nbs, conflict.fields) %>
+        <td><%= simple_format render_newborn_record(conflict.ovrs, conflict.fields) %>
         <td><%= simple_format conflict.fields.join("\n") %></td>
       </tr>
     <% end %>
