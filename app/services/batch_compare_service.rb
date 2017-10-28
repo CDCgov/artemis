@@ -18,24 +18,20 @@ class BatchCompareService < ApplicationService
     ],
     omitted_fields: %i[
       state_file_number
-    ]
+    ],
+    requestor: 'system'
   })
     raise ArgumentError unless options[:datasets].length == 2
-    @datasets = options[:datasets]
-    @hierarchy = options[:hierarchy]
+    @datasets       = options[:datasets]
+    @hierarchy      = options[:hierarchy]
     @omitted_fields = options[:omitted_fields]
+    @requestor      = options[:requestor]
   end
 
   def call!
-    conflicts = Hash.new { |hash, key| hash[key] = Set.new }
-    datasets.permutation.each do |control, other|
-      control.each do |record|
-        linked = find(record, other)
-        diffs = linked ? compare(record, linked, omitted_fields) : []
-        diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
-      end
-    end
-    conflicts
+    Report.create! requestor: @requestor,
+                   data: { conflicts: conflicts },
+                   type: 'DiscrepancyReport'
   end
 
   private
@@ -52,6 +48,18 @@ class BatchCompareService < ApplicationService
       omitted.include? a.first
     end
     Hash[*difference.flatten]
+  end
+
+  def conflicts
+    conflicts = Hash.new { |hash, key| hash[key] = Set.new }
+    datasets.permutation.each do |control, other|
+      control.each do |record|
+        linked = find(record, other)
+        diffs = linked ? compare(record, linked, omitted_fields) : []
+        diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
+      end
+    end
+    conflicts
   end
 
   def find(record, matches = [], fields = hierarchy) # rubocop:disable Metrics/AbcSize, Metrics/LineLength
