@@ -4,9 +4,48 @@
 require 'csv'
 
 class CsvRecord < ActiveHash::Base
+  FIELD_HIERARCHY = %i[
+    kit
+    birthdate
+    mothers_birthdate
+    mothers_last_name
+    mothers_first_name
+    sex
+    last_name
+    first_name
+    multiple_birth
+    birth_weight
+    birth_length
+  ].freeze
+
   class << self
     def collection_cache_key
       [prefix, File.mtime(csv_file).to_i].join '/'
+    end
+
+    def match(record, matches = all, fields = FIELD_HIERARCHY) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/LineLength
+      # Cast to object if hash passed
+      record = new record if record.is_a? Hash
+
+      # Base case
+      return (matches.length == 1 ? matches.first : nil) if fields.empty?
+
+      # Recursive case
+      field, *fields = fields
+      value = record.send(field)
+
+      # Early return if value is nil
+      return match(record, matches, fields) unless value
+
+      # Reduce values
+      # NOTE: ActiveHash cannot chain #where, unfortunately, so we cast to Array
+      maybe_matches = matches.to_a.select { |other| other.send(field) == value }
+      return match(record, matches, fields) if maybe_matches.empty?
+
+      # Early return if one match found
+      return maybe_matches.first if maybe_matches.length == 1
+
+      match(record, maybe_matches, fields)
     end
 
     def reload
@@ -38,5 +77,10 @@ class CsvRecord < ActiveHash::Base
         CSV.table(csv_file).map { |row| format_fields(row.to_hash) }
       end
     end
+  end
+
+  # Instance methods
+  def match(others, *args)
+    self.class.match(self, others, *args)
   end
 end
