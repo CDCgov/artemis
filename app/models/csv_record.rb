@@ -23,6 +23,10 @@ class CsvRecord < ActiveHash::Base
       [prefix, File.mtime(csv_file).to_i].join '/'
     end
 
+    def find_or_match(id, other_model)
+      find_by(id: id) || match(other_model.find_by(id: id))
+    end
+
     def match(record, matches = all, fields = FIELD_HIERARCHY) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/LineLength
       # Cast to object if hash passed
       record = new record if record.is_a? Hash
