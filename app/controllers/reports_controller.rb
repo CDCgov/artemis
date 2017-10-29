@@ -16,15 +16,20 @@ class ReportsController < ApplicationController
     redirect_to Report.last
   end
 
+  # GET /reports/new
+  def new
+    @report = Report.new
+  end
+
   # POST /reports
   # POST /reports.json
   def create
     @report = BatchCompareService.call
 
-    if @report
+    if @report.save
       redirect_to @report, notice: 'Report was successfully created.'
     else
-      redirect_to :back
+      redirect_to new_report_path, alert: 'Could not generate a report.'
     end
   end
 
