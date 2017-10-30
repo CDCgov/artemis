@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Newborn Screening Data" company="FHIRfighters" webLink="https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR" view-date="2017-09-24" view-index="0" gantt-divider-location="529" resource-divider-location="300" version="2.8.4" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Newborn Screening Data" company="FHIRfighters" webLink="https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR" view-date="2017-10-01" view-index="0" gantt-divider-location="529" resource-divider-location="300" version="2.8.4" locale="en_US">
     <description><![CDATA[The Utah Newborn Screening Program collects a variety of demographic data from the screening specimen that is sent in for a newborn. Often the data collected is missing or inaccurate. In order to complete the data and/or ensure accuracy, the Utah Newborn Screening Program compares this data against the Utah Office of Vital Records and Statistics data from birth and death certificates. The current process is antiquated and would benefit from the usage of a newer technology like FHIR.
 
 This application provides an FHIR interface to compare the data between the Utah Newborn Screening Program and the Utah Office of Vital Records and Statistics, including:
@@ -84,9 +84,9 @@ mother's date of birth]]></description>
             </task>
             <task id="38" name="Draft and record D2 presentation" color="#8cb6ce" meeting="false" start="2017-10-19" duration="3" complete="100" expand="true"/>
         </task>
-        <task id="39" name="Development Sprint I" meeting="false" start="2017-10-22" duration="21" complete="58" expand="true">
+        <task id="39" name="Development Sprint I" meeting="false" start="2017-10-22" duration="21" complete="78" expand="true">
             <depend id="248" type="2" difference="0" hardness="Strong"/>
-            <task id="42" name="DevOps" meeting="false" start="2017-10-22" duration="18" complete="72" expand="true">
+            <task id="42" name="DevOps" meeting="false" start="2017-10-22" duration="18" complete="85" expand="true">
                 <depend id="181" type="2" difference="0" hardness="Strong"/>
                 <task id="50" name="Set up web application framework" color="#8cb6ce" meeting="false" start="2017-10-22" duration="3" complete="100" expand="true">
                     <depend id="57" type="2" difference="0" hardness="Strong"/>
@@ -100,9 +100,9 @@ mother's date of birth]]></description>
                     <depend id="51" type="2" difference="0" hardness="Strong"/>
                     <depend id="53" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="53" name="Establish integration/deploy pipeline" color="#8cb6ce" meeting="false" start="2017-11-04" duration="5" complete="0" expand="true"/>
+                <task id="53" name="Establish integration/deploy pipeline" color="#8cb6ce" meeting="false" start="2017-11-04" duration="5" complete="46" expand="true"/>
             </task>
-            <task id="44" name="Back-end" meeting="false" start="2017-10-25" duration="15" complete="68" expand="true">
+            <task id="44" name="Back-end" meeting="false" start="2017-10-25" duration="15" complete="84" expand="true">
                 <depend id="181" type="2" difference="0" hardness="Strong"/>
                 <task id="75" name="Create data models" color="#8cb6ce" meeting="false" start="2017-10-25" duration="5" complete="100" expand="true">
                     <depend id="63" type="2" difference="0" hardness="Strong"/>
@@ -111,13 +111,13 @@ mother's date of birth]]></description>
                 <task id="76" name="Create controllers and services" color="#8cb6ce" meeting="false" start="2017-10-30" duration="4" complete="100" expand="true">
                     <depend id="71" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="71" name="Add authentication/authorization" color="#8cb6ce" meeting="false" start="2017-11-03" duration="3" complete="0" expand="true">
+                <task id="71" name="Add authentication/authorization" color="#8cb6ce" meeting="false" start="2017-11-03" duration="3" complete="100" expand="true">
                     <depend id="65" type="2" difference="0" hardness="Strong"/>
                 </task>
                 <task id="63" name="Add unit tests" color="#8cb6ce" meeting="false" start="2017-10-30" duration="4" complete="100" expand="true"/>
                 <task id="65" name="Add integration tests" color="#8cb6ce" meeting="false" start="2017-11-06" duration="3" complete="0" expand="true"/>
             </task>
-            <task id="46" name="Front-end" meeting="false" start="2017-10-25" duration="15" complete="46" expand="true">
+            <task id="46" name="Front-end" meeting="false" start="2017-10-25" duration="15" complete="81" expand="true">
                 <depend id="181" type="2" difference="0" hardness="Strong"/>
                 <task id="74" name="Set up framework and templates" color="#8cb6ce" meeting="false" start="2017-10-25" duration="2" complete="100" expand="true">
                     <depend id="77" type="2" difference="0" hardness="Strong"/>
@@ -126,10 +126,10 @@ mother's date of birth]]></description>
                     <depend id="79" type="2" difference="0" hardness="Strong"/>
                     <depend id="81" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="79" name="Create auxiliary screens" color="#8cb6ce" meeting="false" start="2017-11-01" duration="3" complete="0" expand="true">
+                <task id="79" name="Create auxiliary screens" color="#8cb6ce" meeting="false" start="2017-11-01" duration="3" complete="100" expand="true">
                     <depend id="81" type="2" difference="0" hardness="Strong"/>
                 </task>
-                <task id="81" name="Integrate screens and user flow" color="#8cb6ce" meeting="false" start="2017-11-04" duration="3" complete="0" expand="true">
+                <task id="81" name="Integrate screens and user flow" color="#8cb6ce" meeting="false" start="2017-11-04" duration="3" complete="74" expand="true">
                     <depend id="83" type="2" difference="0" hardness="Strong"/>
                 </task>
                 <task id="83" name="Add acceptance tests" color="#8cb6ce" meeting="false" start="2017-11-07" duration="2" complete="0" expand="true"/>
