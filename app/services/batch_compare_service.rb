@@ -13,9 +13,9 @@ class BatchCompareService < ApplicationService
   end
 
   def call!
-    Report.create! requestor: @requestor,
-                   data: { conflicts: conflicts },
-                   type: 'DiscrepancyReport'
+    Report.new requestor: @requestor,
+               data: { conflicts: conflicts },
+               type: 'DiscrepancyReport'
   end
 
   private
