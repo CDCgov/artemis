@@ -1,6 +1,6 @@
 <h1>New Report</h1>
 
-<%= form_with(model: @report, local: true) do |form| %>
+<%= form_with(model: @report, local: true, multipart: true) do |form| %>
   <% if @report.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
@@ -12,6 +12,14 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="uploads">
+    <label for="nbs_file">Upload NBS CSV</label>
+    <%= file_field_tag 'nbs_file' %>
+
+    <label for="ovrs_file">Upload OVRS CSV</label>
+    <%= file_field_tag 'ovrs_file' %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
