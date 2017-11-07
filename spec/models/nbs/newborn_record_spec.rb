@@ -52,4 +52,28 @@ RSpec.describe NBS::NewbornRecord, type: :model do
       subject.match others
     end
   end
+
+  describe '#to_fhir' do
+
+    let(:record) { described_class.find('UT850A020') }
+    #UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
+    let(:fhir_object) { record.to_fhir }
+
+    it 'returns a FHIR Patient' do
+      expect(record.to_fhir).to be_a(FHIR::Patient)
+    end
+
+    it 'fills in the given name' do
+      expect(fhir_object.name[0].given[0]).to eq(record[:first_name])
+    end
+
+    it 'fills in the family name' do
+      expect(fhir_object.name[0].family).to eq(record[:last_name])
+    end
+
+    it 'fills in the gender' do
+      expect(fhir_object.gender).to eq(record[:sex] == 'M' ? 'male' : 'female')
+    end
+
+  end
 end

@@ -90,11 +90,12 @@ class CsvRecord < ActiveHash::Base
   end
 
   def to_fhir
-    puts self[:first_name], self[:last_name]
-
-    # patient = FHIR::Patient.new(name:
-    #                                 { given: self[:first_name],
-    #                                   family: self[:last_name] })
-    # return patient
+    patient = FHIR::Patient.new(name:
+                                    { given: self[:first_name],
+                                      family: self[:last_name] },
+                                birthDate: self[:birthdate],
+                                gender: self[:sex] == 'M' ? 'male' : 'female'
+    )
+    return patient
   end
 end
