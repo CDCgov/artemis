@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :reports, only: %i[index show create] do
+  resources :reports, only: %i[index show new create] do
     collection do
       get :latest
     end
