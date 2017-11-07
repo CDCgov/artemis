@@ -17,7 +17,7 @@
       <tr>
         <td><%= index + 1 %></td>
         <td><%= conflict.id %></td>
-        <td><%= simple_format conflict.fields.reject { |x| x == 'id'}.map(&:titlecase).join("\n") %></td>
+        <td><%= simple_format conflict.fields.sort.reject { |x| x == 'id'}.map(&:titlecase).join("\n") %></td>
         <td><%= simple_format render_newborn_record(conflict.nbs, conflict.fields) %>
         <td><%= simple_format render_newborn_record(conflict.ovrs, conflict.fields) %>
       </tr>
