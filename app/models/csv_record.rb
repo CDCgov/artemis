@@ -2,6 +2,7 @@
 # pull directly from the CSV file located in the <APP_ROOT>/data/ folder, but in
 # the future, might be adapted to accomodate a connection to a database.
 require 'csv'
+require 'fhir_client'
 
 class CsvRecord < ActiveHash::Base
   FIELD_HIERARCHY = %i[
@@ -86,5 +87,14 @@ class CsvRecord < ActiveHash::Base
   # Instance methods
   def match(others, *args)
     self.class.match(self, others, *args)
+  end
+
+  def to_fhir
+    puts self[:first_name], self[:last_name]
+
+    # patient = FHIR::Patient.new(name:
+    #                                 { given: self[:first_name],
+    #                                   family: self[:last_name] })
+    # return patient
   end
 end
