@@ -106,6 +106,6 @@ class CsvRecord < ActiveHash::Base
   def map_gender(gender_letter)
     lookup = {'M' => 'male', 'F' => 'female'}
     lookup.default = 'unknown'
-    lookup gender_letter
+    lookup[gender_letter]
   end
 end
