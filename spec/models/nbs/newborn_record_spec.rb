@@ -80,13 +80,39 @@ RSpec.describe NBS::NewbornRecord, type: :model do
       expect(fhir_patient.birthDate).to eq(record[:birthdate])
     end
 
-    it 'fills in the gender' do
-      expect(fhir_patient.gender).to eq(record[:sex] == 'M' ? 'male' : 'female')
-    end
-
     it 'fills in the multiple birth integer value' do
       expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
     end
 
+    context 'gender is mapped properly when gender is' do
+      before(:each) do
+        allow(record).to receive(:[]).and_call_original
+        allow(record).to receive(:[]).with(:sex).and_return(sex)
+      end
+
+      context 'female' do
+        let(:sex) { 'F' }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('female')
+        end
+      end
+
+      context 'male' do
+        let(:sex) { 'M' }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('male')
+        end
+      end
+
+      context 'missing' do
+        let(:sex) { nil }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('unknown')
+        end
+      end
+    end
   end
 end

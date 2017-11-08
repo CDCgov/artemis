@@ -91,15 +91,21 @@ class CsvRecord < ActiveHash::Base
 
   def to_fhir
     patient = FHIR::Patient.new(identifier:
-                                    { use: 'official',
-                                      value: self[:id]}, #TODO: figure out how to get assigner in there, if possible.
-                                name:
-                                    { given: self[:first_name],
-                                      family: self[:last_name] },
-                                birthDate: self[:birthdate],
-                                gender: self[:sex] == 'M' ? 'male' : 'female',
-                                multipleBirthInteger: self[:multiple_birth]
+                          { use: 'official',
+                            value: self[:id]},
+                      name:
+                          { given: self[:first_name],
+                            family: self[:last_name] },
+                      birthDate: self[:birthdate],
+                      gender: map_gender(self[:sex]),
+                      multipleBirthInteger: self[:multiple_birth]
     )
-    return patient
+    patient
+  end
+
+  def map_gender(gender_letter)
+    lookup = {'M' => 'male', 'F' => 'female'}
+    lookup.default = 'unknown'
+    lookup gender_letter
   end
 end
