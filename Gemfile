@@ -7,6 +7,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'active_hash', '~> 1.5.2'
+gem 'fhir_client', '~>3'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
@@ -24,6 +25,8 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 3.7'
+  gem 'simplecov'
+  gem 'simplecov-rcov'
 end
 
 group :development do

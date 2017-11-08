@@ -52,4 +52,67 @@ RSpec.describe NBS::NewbornRecord, type: :model do
       subject.match others
     end
   end
+
+  describe '#to_fhir' do
+
+    let(:record) { described_class.find('UT850A020') }
+    #UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
+    let(:fhir_patient) { record.to_fhir }
+
+    it 'returns a FHIR Patient' do
+      expect(record.to_fhir).to be_a(FHIR::Patient)
+    end
+
+    it 'uses the record ID as the identifier' do
+      expect(fhir_patient.identifier[0].value).to eq(record[:id])
+      expect(fhir_patient.identifier[0].use).to eq('official')
+    end
+
+    it 'fills in the given name' do
+      expect(fhir_patient.name[0].given[0]).to eq(record[:first_name])
+    end
+
+    it 'fills in the family name' do
+      expect(fhir_patient.name[0].family).to eq(record[:last_name])
+    end
+
+    it 'fills in the birth date' do
+      expect(fhir_patient.birthDate).to eq(record[:birthdate])
+    end
+
+    it 'fills in the multiple birth integer value' do
+      expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
+    end
+
+    context 'gender is mapped properly when gender is' do
+      before(:each) do
+        allow(record).to receive(:[]).and_call_original
+        allow(record).to receive(:[]).with(:sex).and_return(sex)
+      end
+
+      context 'female' do
+        let(:sex) { 'F' }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('female')
+        end
+      end
+
+      context 'male' do
+        let(:sex) { 'M' }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('male')
+        end
+      end
+
+      context 'missing' do
+        let(:sex) { nil }
+
+        it 'fills in the gender' do
+          expect(fhir_patient.gender).to eq('unknown')
+        end
+      end
+    end
+  end
 end

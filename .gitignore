@@ -24,3 +24,4 @@
 .env
 # Ignore LibreOffice files
 .~lock*
+/coverage/
