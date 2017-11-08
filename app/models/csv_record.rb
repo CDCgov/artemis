@@ -52,6 +52,14 @@ class CsvRecord < ActiveHash::Base
       match(record, maybe_matches, fields)
     end
 
+    def load(data)
+      Rails.cache.delete collection_cache_key
+      self.data = CSV.parse(data, headers: true, converters: :numeric, header_converters: :symbol).map do |row|
+        format_fields(row.to_hash)
+      end
+      true
+    end
+
     def reload
       Rails.cache.delete collection_cache_key
       self.data = source

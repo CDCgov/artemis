@@ -24,6 +24,10 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
+    # TODO: error-handling
+    ProcessCsvUploadService.call! nbs:  report_params[:nbs_file].read,
+                                  ovrs: report_params[:ovrs_file].read
+
     @report = BatchCompareService.call
 
     if @report.save
@@ -34,6 +38,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def report_params
+    params.permit(:nbs_file, :ovrs_file)
+  end
 
   def set_report
     @report = Report.find(params[:id])
