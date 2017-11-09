@@ -33,14 +33,25 @@ class BatchCompareService < ApplicationService
   end
 
   def conflicts
-    conflicts = Hash.new { |hash, key| hash[key] = Set.new }
+    conflict_hash.to_a.map do |id, fields|
+      {
+        id: id,
+        nbs: NBS::NewbornRecord.find_or_match(id, OVRS::NewbornRecord),
+        ovrs: OVRS::NewbornRecord.find_or_match(id, NBS::NewbornRecord),
+        fields: fields
+      }
+    end
+  end
+
+  def conflict_hash
+    hash = Hash.new { |h, k| h[k] = Set.new }
     datasets.permutation.each do |control, other|
       control.each do |record|
         linked = record.match other
         diffs = linked ? compare(record, linked) : {}
-        diffs.each_key { |prop| conflicts[choose_id(record, linked)].add(prop) }
+        diffs.each_key { |prop| hash[choose_id(record, linked)].add(prop) }
       end
     end
-    conflicts
+    hash
   end
 end

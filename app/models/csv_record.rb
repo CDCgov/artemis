@@ -63,6 +63,10 @@ class CsvRecord < ActiveHash::Base
       true
     end
 
+    def prefix
+      to_s.split('::').first
+    end
+
     def reload
       Rails.cache.delete collection_cache_key
       self.data = source
@@ -81,10 +85,6 @@ class CsvRecord < ActiveHash::Base
 
     def format_fields(_hash = {})
       raise NotImplementedError
-    end
-
-    def prefix
-      to_s.split('::').first
     end
 
     def source
