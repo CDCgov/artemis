@@ -16,6 +16,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 require 'simplecov-rcov'
+require 'simplecov-console'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -110,4 +111,7 @@ class SimpleCov::Formatter::MergedFormatter
     SimpleCov::Formatter::RcovFormatter.new.format result
   end
 end
-SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
+  SimpleCov::Formatter::Console,
+  SimpleCov::Formatter::MergedFormatter
+]

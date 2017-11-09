@@ -45,13 +45,19 @@ GEM
     annotate (2.7.2)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
+    ansi (1.5.0)
     arel (8.0.0)
     ast (2.3.0)
     bcp47 (0.3.3)
       i18n
+    better_errors (2.4.0)
+      coderay (>= 1.0.0)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
     bindex (0.5.0)
     builder (3.2.3)
     byebug (9.1.0)
+    coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
     date_time_precision (0.8.1)
@@ -80,6 +86,7 @@ GEM
       nokogiri (>= 1.6)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    hirb (0.7.3)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.9.0)
@@ -122,6 +129,11 @@ GEM
       ast (~> 2.2)
     pg (0.21.0)
     powerpack (0.1.1)
+    pry (0.11.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
@@ -203,6 +215,10 @@ GEM
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
+    simplecov-console (0.4.2)
+      ansi
+      hirb
+      simplecov
     simplecov-html (0.10.2)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
@@ -251,17 +267,20 @@ PLATFORMS
 DEPENDENCIES
   active_hash (~> 1.5.2)
   annotate
+  better_errors
   byebug
   fhir_client (~> 3)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
+  pry-rails
   puma (~> 3.7)
   rails (~> 5.1.4)
   rspec-rails (~> 3.7)
   rubocop
   sass-rails (~> 5.0)
   simplecov
+  simplecov-console
   simplecov-rcov
   spring
   spring-watcher-listen (~> 2.0.0)
@@ -275,4 +294,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

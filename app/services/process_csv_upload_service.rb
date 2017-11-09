@@ -5,7 +5,7 @@ class ProcessCsvUploadService < ApplicationService
 
   def call!(datasets = { nbs: nil, ovrs: nil })
     @nbs_data, @ovrs_data = datasets[:nbs], datasets[:ovrs]
-    
+
     validate_nbs!
     validate_ovrs!
 

@@ -15,12 +15,13 @@ class Report < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   def conflicts
-    (data['conflicts'] || []).to_a.map do |id, fields|
+    (data['conflicts'] || []).map do |conflict|
+      conflict = conflict.with_indifferent_access
       OpenStruct.new(
-        id: id,
-        nbs: NBS::NewbornRecord.find_or_match(id, OVRS::NewbornRecord),
-        ovrs: OVRS::NewbornRecord.find_or_match(id, NBS::NewbornRecord),
-        fields: fields || []
+        id: conflict[:id],
+        nbs: OpenStruct.new(conflict[:nbs]),
+        ovrs: OpenStruct.new(conflict[:ovrs]),
+        fields: conflict[:fields]
       )
     end
   end
