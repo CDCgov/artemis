@@ -14,12 +14,13 @@
 
   <tbody>
     <% @report.conflicts.each_with_index do |conflict, index| %>
+      <% data = format_conflict(conflict) %>
       <tr>
         <td><%= index + 1 %></td>
         <td><%= conflict.id %></td>
-        <td><%= simple_format conflict.fields.reject { |x| x == 'id'}.map(&:titlecase).join("\n") %></td>
-        <td><%= simple_format render_newborn_record(conflict.nbs, conflict.fields) %>
-        <td><%= simple_format render_newborn_record(conflict.ovrs, conflict.fields) %>
+        <% %i[field nbs ovrs].map do |method| %>
+          <td><%= simple_format data.map { |x| x.send(method) }.join("\n") %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
