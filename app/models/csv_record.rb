@@ -55,7 +55,9 @@ class CsvRecord < ActiveHash::Base
 
     def load(data)
       Rails.cache.delete collection_cache_key
-      self.data = CSV.parse(data, headers: true, converters: :numeric, header_converters: :symbol).map do |row|
+      self.data = CSV.parse(data, headers: true,
+                                  converters: :numeric,
+                                  header_converters: :symbol).map do |row|
         format_fields(row.to_hash)
       end
       true
@@ -98,21 +100,17 @@ class CsvRecord < ActiveHash::Base
   end
 
   def to_fhir
-    patient = FHIR::Patient.new(identifier:
-                          { use: 'official',
-                            value: self[:id]},
-                      name:
-                          { given: self[:first_name],
-                            family: self[:last_name] },
-                      birthDate: self[:birthdate],
-                      gender: map_gender(self[:sex]),
-                      multipleBirthInteger: self[:multiple_birth]
+    FHIR::Patient.new(
+      identifier: { use: 'official', value: self[:id] },
+      name: { given: self[:first_name], family: self[:last_name] },
+      birthDate: self[:birthdate],
+      gender: map_gender(self[:sex]),
+      multipleBirthInteger: self[:multiple_birth]
     )
-    patient
   end
 
   def map_gender(gender_letter)
-    lookup = {'M' => 'male', 'F' => 'female'}
+    lookup = { 'M' => 'male', 'F' => 'female' }
     lookup.default = 'unknown'
     lookup[gender_letter]
   end

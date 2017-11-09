@@ -54,9 +54,8 @@ RSpec.describe NBS::NewbornRecord, type: :model do
   end
 
   describe '#to_fhir' do
-
     let(:record) { described_class.find('UT850A020') }
-    #UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
+    # UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
     let(:fhir_patient) { record.to_fhir }
 
     it 'returns a FHIR Patient' do
