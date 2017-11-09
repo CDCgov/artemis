@@ -32,12 +32,13 @@ class BatchCompareService < ApplicationService
     Hash[*difference.flatten]
   end
 
+  # rubocop:disable Metrics/LineLength
   def conflicts
     conflict_hash.to_a.map do |id, fields|
       {
         id: id,
-        nbs: NBS::NewbornRecord.find_or_match(id, OVRS::NewbornRecord),
-        ovrs: OVRS::NewbornRecord.find_or_match(id, NBS::NewbornRecord),
+        nbs: NBS::NewbornRecord.find_or_match(id, OVRS::NewbornRecord).try(:attributes),
+        ovrs: OVRS::NewbornRecord.find_or_match(id, NBS::NewbornRecord).try(:attributes),
         fields: fields
       }
     end

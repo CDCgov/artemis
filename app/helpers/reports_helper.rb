@@ -3,8 +3,8 @@ module ReportsHelper
     conflict.fields.reject { |x| x == 'id' }.map do |field|
       OpenStruct.new(
         field: field.titlecase,
-        nbs:   conflict.nbs.send(field) || fallback,
-        ovrs:  conflict.ovrs.send(field) || fallback
+        nbs:   conflict.nbs[field] || fallback,
+        ovrs:  conflict.ovrs[field] || fallback
       )
     end
   end
