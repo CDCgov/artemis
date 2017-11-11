@@ -1,6 +1,8 @@
+<% content_for(:page) { 'new-report' } %>
+
 <h1>New Report</h1>
 
-<%= form_with(model: @report, local: true, multipart: true) do |form| %>
+<%= form_with(model: @report, local: true, multipart: true, class: 'report-form') do |form| %>
   <% if @report.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
@@ -14,15 +16,19 @@
   <% end %>
 
   <div class="uploads">
-    <label for="nbs_file">Upload NBS CSV</label>
-    <%= file_field_tag 'nbs_file' %>
+    <div class="upload">
+      <label for="nbs_file">Upload NBS CSV</label>
+      <%= file_field_tag 'nbs_file' %>
+    </div>
 
-    <label for="ovrs_file">Upload OVRS CSV</label>
-    <%= file_field_tag 'ovrs_file' %>
+    <div class="upload">
+      <label for="ovrs_file">Upload OVRS CSV</label>
+      <%= file_field_tag 'ovrs_file' %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action' %>
   </div>
 <% end %>
 

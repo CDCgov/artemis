@@ -2,8 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.report-table {
-  &, th, td {
-    border: 1px solid black;
+.report-page {
+  .report-table {
+    &, th, td {
+      border: 1px solid black;
+    }
+  }
+}
+
+.new-report-page {
+  .report-form {
+    .upload, .action {
+      margin-bottom: 20px;
+    }
   }
 }
