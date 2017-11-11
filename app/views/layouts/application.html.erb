@@ -8,7 +8,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="<%= yield(:page) || 'default' %>-page">
     <p id="alert"><%= alert %></p>
     <p id="notice"><%= notice %></p>
 
