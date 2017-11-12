@@ -1,63 +1,28 @@
----
-version: '2'
+version: '3'
 volumes:
   db-data:
     external: false
-  bundle-data:
-    external: false
 services:
-  dev:
-    build: "."
-    entrypoint: ".picobox/start"
-    volumes:
-    - ".:/var/www:cached"
-    volumes_from:
-    - bundle
-    environment:
-      RAILS_ENV: development
+  app:
+    build: .
+    command: bundle exec rails s
     env_file:
-    - ".env"
-    hostname: picobox
+      - ".env"
     ports:
-    - 3000:3000
-    links:
-    - postgres
-  test:
-    build: "."
-    entrypoint: ".picobox/start"
-    volumes:
-    - ".:/var/www:cached"
-    volumes_from:
-    - bundle
-    environment:
-      RAILS_ENV: test
+      - 3000:3000
+    depends_on:
+      - setup
+      - db
+  setup:
+    build: .
+    command: bundle exec rails db:setup
     env_file:
-    - ".env"
-    hostname: picobox_test
-    links:
-    - postgres
-  webpack:
-    build: "."
-    entrypoint: ".picobox/start"
-    volumes_from:
-    - bundle
+      - ".env"
+    depends_on:
+      - db
+  db:
+    image: postgres:9.6-alpine
     volumes:
-    - ".:/var/www:cached"
-    environment:
-      RAILS_ENV: development
+      - db-data:/var/lib/postgresql/data
     env_file:
-    - ".env"
-    hostname: picobox
-    ports:
-    - 3035:3035
-  bundle:
-    image: busybox
-    volumes:
-    - bundle-data:/usr/local/bundle:cached
-  postgres:
-    image: postgres:9.6
-    volumes:
-    - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - ".env"
