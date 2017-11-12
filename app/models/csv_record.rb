@@ -3,6 +3,7 @@
 # the future, might be adapted to accomodate a connection to a database.
 require 'csv'
 require 'fhir_client'
+require 'SecureRandom'
 
 class CsvRecord < ActiveHash::Base
   FIELD_HIERARCHY = %i[
@@ -100,13 +101,64 @@ class CsvRecord < ActiveHash::Base
   end
 
   def to_fhir
-    FHIR::Patient.new(
+    patient = FHIR::Patient.new(
       identifier: { use: 'official', value: self[:id] },
       name: { given: self[:first_name], family: self[:last_name] },
       birthDate: self[:birthdate],
       gender: map_gender(self[:sex]),
       multipleBirthInteger: self[:multiple_birth]
     )
+    patient.id = SecureRandom.uuid
+    mother = mother_info patient
+    mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
+    link = FHIR::Patient::Link.new
+    link.other = mother_ref
+    link.type = 'refer'
+    patient.link.append link
+
+    patient
+  end
+
+  def mother_info(patient)
+    mother = FHIR::RelatedPerson.new(
+      name: { given: self[:mothers_first_name], family: self[:mothers_last_name] },
+      birthDate: self[:mothers_birthdate]
+    )
+    mother.patient = FHIR::Reference.new(reference: "Patient/#{patient.id}")
+    mother.id = SecureRandom.uuid
+    mother
+  end
+
+  def birth_length(patient)
+    observation = observation_with_loinc '8305-5', self[:birth_length], 'cm'
+    reference = FHIR::Reference.new
+    reference.reference = "Patient/#{patient.id}"
+    observation.subject = reference
+    observation
+  end
+
+  def birth_weight(patient)
+    observation = observation_with_loinc '56056-5', self[:birth_weight], 'g'
+    reference = FHIR::Reference.new
+    reference.reference = "Patient/#{patient.id}"
+    observation.subject = reference
+    observation
+  end
+
+  private
+
+  def observation_with_loinc(code, value, unit)
+    observation = FHIR::Observation.new
+    coding = FHIR::Coding.new
+    coding.system = 'http://loinc.org'
+    coding.code = code
+    observation.code = FHIR::CodeableConcept.new
+    observation.code.coding = [coding]
+    quantity = FHIR::Quantity.new
+    quantity.value = value
+    quantity.unit = unit
+    observation.valueQuantity = quantity
+    observation
   end
 
   def map_gender(gender_letter)
