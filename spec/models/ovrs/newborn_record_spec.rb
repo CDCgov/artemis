@@ -135,7 +135,7 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
 
     describe '#birth_length' do
       let(:code) { '8305-5' }
-      let(:observation) { record.birth_length fhir_patient }
+      let(:observation) { record.birth_length_observation fhir_patient }
       it 'returns an observation' do
         expect(observation).to be_a(FHIR::Observation)
       end
@@ -161,7 +161,7 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
 
     describe '#birth_weight' do
       let(:code) { '56056-5' }
-      let(:observation) { record.birth_weight fhir_patient }
+      let(:observation) { record.birth_weight_observation fhir_patient }
       it 'returns an observation for the birth weight' do
         expect(observation).to be_a(FHIR::Observation)
       end
