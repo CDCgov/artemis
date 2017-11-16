@@ -3,6 +3,7 @@
 # the future, might be adapted to accomodate a connection to a database.
 require 'csv'
 require 'fhir_client'
+require 'SecureRandom'
 
 class CsvRecord < ActiveHash::Base
   FIELD_HIERARCHY = %i[
@@ -100,6 +101,50 @@ class CsvRecord < ActiveHash::Base
   end
 
   def to_fhir
+    create_patient.tap do |patient|
+      patient.id = SecureRandom.uuid
+      mother = mother_info patient
+      mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
+      link = FHIR::Patient::Link.new
+      link.other = mother_ref
+      link.type = 'refer'
+      patient.link.append link
+    end
+  end
+
+  def mother_info(patient)
+    create_mother.tap do |mother|
+      mother.patient = FHIR::Reference.new(reference: "Patient/#{patient.id}")
+      mother.id = SecureRandom.uuid
+    end
+  end
+
+  def birth_length_observation(patient)
+    observation = observation_with_loinc '8305-5', self[:birth_length], 'cm'
+    reference = FHIR::Reference.new
+    reference.reference = "Patient/#{patient.id}"
+    observation.subject = reference
+    observation
+  end
+
+  def birth_weight_observation(patient)
+    observation = observation_with_loinc '56056-5', self[:birth_weight], 'g'
+    reference = FHIR::Reference.new
+    reference.reference = "Patient/#{patient.id}"
+    observation.subject = reference
+    observation
+  end
+
+  private
+
+  def create_mother
+    FHIR::RelatedPerson.new(
+      name: { given: self[:mothers_first_name], family: self[:mothers_last_name] },
+      birthDate: self[:mothers_birthdate]
+    )
+  end
+
+  def create_patient
     FHIR::Patient.new(
       identifier: { use: 'official', value: self[:id] },
       name: { given: self[:first_name], family: self[:last_name] },
@@ -107,6 +152,28 @@ class CsvRecord < ActiveHash::Base
       gender: map_gender(self[:sex]),
       multipleBirthInteger: self[:multiple_birth]
     )
+  end
+
+  def observation_with_loinc(code, value, unit)
+    FHIR::Observation.new.tap do |observation|
+      observation.code = FHIR::CodeableConcept.new
+      observation.code.coding = [create_coding(code)]
+      observation.valueQuantity = create_quantity(value, unit)
+    end
+  end
+
+  def create_coding(code)
+    FHIR::Coding.new.tap do |coding|
+      coding.system = 'http://loinc.org'
+      coding.code = code
+    end
+  end
+
+  def create_quantity(value, unit)
+    FHIR::Quantity.new.tap do |quantity|
+      quantity.value = value
+      quantity.unit = unit
+    end
   end
 
   def map_gender(gender_letter)
