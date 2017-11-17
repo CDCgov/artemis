@@ -26,3 +26,12 @@ services:
       - db-data:/var/lib/postgresql/data
     env_file:
       - ".env"
+  fhir:
+    image: jtmille3/hapi-fhir-dstu3-v2.5-postgres:latest
+    restart: always
+    ports:
+       - 8080:8080
+    environment:
+       - JAVA_OPTIONS=-Dpostgres.host=db -Dpostgres.database=artemis_production
+    depends_on:
+       - db
