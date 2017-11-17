@@ -1,68 +1,41 @@
-# picobox for use with rails containing ruby and nodejs
-#
-# VERSION               0.1.0
+FROM ruby:2.4.2-alpine3.6
 
-# Change this for different versions of ruby (see https://hub.docker.com/_/ruby/)
-# FROM ruby:2.2-slim
-# FROM ruby:2.3-slim
-
-FROM ruby:2.4-slim-stretch
-MAINTAINER Stefan Surzycki <stefan.surzycki@gmail.com>
-
-ENV APP_HOME /var/www
+ENV APP_HOME /app
 ENV PATH $APP_HOME/bin:$PATH
 
-# silence deb warnings
-ENV DEBIAN_FRONTEND noninteractive
-ENV HOSTNAME picobox
-
-# do install here
-RUN mkdir -p /tmp
-WORKDIR /tmp
-
-# add repository software
-RUN apt-get update
-RUN apt-get install -y build-essential software-properties-common tzdata wget curl gnupg2
-
-## Languages
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
-
-
-## Database dependencies
-
-# postgres client
-RUN apt-get install -y libpq-dev postgresql-client
-
-
-# Tools
-
-# install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn
-
-## phantomjs pre-requisites
-RUN apt-get install -y chrpath libssl-dev libxft-dev
-RUN apt-get install -y libfreetype6 libfreetype6-dev
-RUN apt-get install -y libfontconfig1 libfontconfig1-dev
-
-# phantomjs latest
-RUN yarn global add phantomjs-prebuilt
-
-# utils
-RUN apt-get install -y neovim git
-
-# make nano work
-RUN echo "export TERM=xterm" >> /etc/bash.bashrc
-
-# working dir
+# Configure main application and working directory
+RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-# add gemfile
-ONBUILD ADD Gemfile* $APP_HOME/
+# Copy Gemfile and lock separately to cache dependencies unless they change
+COPY Gemfile Gemfile.lock ./
 
-# hook up source
-ONBUILD ADD . $APP_HOME
+# Install Yarn
+ENV PATH /root/.yarn/bin:$PATH
+RUN apk add --no-cache --virtual .yarn-deps curl gnupg && \
+  curl -o- -L https://yarnpkg.com/install.sh | sh && \
+  apk del .yarn-deps
+
+# Install dependencies
+RUN apk --update add --virtual build-dependencies build-base ruby-dev \
+      libressl libxml2-dev libxslt-dev postgresql-dev libc-dev \
+      linux-headers nodejs tzdata && \
+      gem install bundler && \
+      gem update --system && \
+      bundle config build.nokogiri --use-system-libraries && \
+      bundle install --jobs 10 --without development test && \
+      yarn install
+
+# Set Rails to production mode
+ENV RAILS_ENV production
+ENV NODE_ENV production
+
+# Copy the rest of the application
+COPY . ./
+
+# Precompile assets and expose server port
+RUN bundle exec rake assets:precompile
+EXPOSE 3000
+
+# Start Rails server
+CMD ["bundle", "exec", "rails", "s"]
