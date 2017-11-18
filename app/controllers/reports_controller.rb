@@ -9,7 +9,9 @@ class ReportsController < ApplicationController
 
   # GET /reports/1
   # GET /reports/1.json
-  def show; end
+  def show
+    @nbs = NBS::NewbornRecord.all.map(&:to_json)
+  end
 
   # GET /reports/latest
   def latest

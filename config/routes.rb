@@ -4,6 +4,6 @@ Rails.application.routes.draw do
       get :latest
     end
   end
-  #root to: redirect(path: '/main')
-  root  'main#index'
+  post :fhir, to: 'main#fhir'
+  root 'main#index'
 end

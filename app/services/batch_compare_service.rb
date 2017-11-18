@@ -32,7 +32,6 @@ class BatchCompareService < ApplicationService
     Hash[*difference.flatten]
   end
 
-  # rubocop:disable Metrics/LineLength
   def conflicts
     conflict_hash.to_a.map do |id, fields|
       {
