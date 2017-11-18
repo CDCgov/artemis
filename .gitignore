@@ -21,7 +21,6 @@
 /public/packs-test
 /node_modules
 
-.env
 # Ignore LibreOffice files
 .~lock*
 /coverage/
