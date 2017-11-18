@@ -19,6 +19,7 @@ gem 'webpacker', '~> 3.0.2'
 
 group :development, :test do
   gem 'annotate'
+  gem 'binding_of_caller'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-rails'
   gem 'rubocop', require: false

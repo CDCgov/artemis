@@ -4,5 +4,6 @@ Rails.application.routes.draw do
       get :latest
     end
   end
+  post :fhir, to: 'main#fhir'
   root 'main#index'
 end
