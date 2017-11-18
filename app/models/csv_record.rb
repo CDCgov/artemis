@@ -3,8 +3,8 @@
 # the future, might be adapted to accomodate a connection to a database.
 require 'csv'
 require 'fhir_client'
-require 'SecureRandom'
 
+# rubocop:disable Metrics/ClassLength
 class CsvRecord < ActiveHash::Base
   FIELD_HIERARCHY = %i[
     kit
