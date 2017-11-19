@@ -53,7 +53,8 @@ RSpec.describe NBS::NewbornRecord, type: :model do
     end
   end
 
-  describe '#to_fhir' do
+
+  describe 'fhir_elements' do
     let(:record) { described_class.find('UT850A020') }
     # UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
     let(:fhir_patient) { record.to_fhir }
@@ -84,21 +85,6 @@ RSpec.describe NBS::NewbornRecord, type: :model do
         expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
       end
 
-      context 'mother linkage' do
-        let(:fhir_patient) { record.to_fhir }
-        let(:mother) { double('RelatedPerson', id: '12345') }
-
-        before(:each) do
-          allow(record).to receive(:mother_info).and_return(mother)
-        end
-
-        it 'adds a reference to a RelatedPerson representing the mother' do
-          expect(fhir_patient.link[0]).to be_a(FHIR::Patient::Link)
-          expect(
-            fhir_patient.link[0].other.reference
-          ).to eq("RelatedPerson/#{mother.id}")
-        end
-      end
 
       context 'gender is mapped properly when gender is' do
         before(:each) do
@@ -129,6 +115,19 @@ RSpec.describe NBS::NewbornRecord, type: :model do
             expect(fhir_patient.gender).to eq('unknown')
           end
         end
+      end
+    end
+
+    describe '#add_mother_to_patient' do
+      let(:fhir_patient) { record.to_fhir }
+      let(:mother) { double('RelatedPerson', id: '12345') }
+
+      it 'adds a reference to a RelatedPerson representing the mother' do
+        record.add_mother_to_patient(mother, fhir_patient)
+        expect(fhir_patient.link[0]).to be_a(FHIR::Patient::Link)
+        expect(
+          fhir_patient.link[0].other.reference
+        ).to eq("RelatedPerson/#{mother.id}")
       end
     end
 
@@ -203,6 +202,61 @@ RSpec.describe NBS::NewbornRecord, type: :model do
         expect(observation.valueQuantity.unit).to eq('g')
         expect(observation.valueQuantity.value).to eq(record[:birth_weight])
       end
+    end
+
+    describe '#save_to_fhir' do
+
+      let(:client)      { double FHIR::Client }
+      let(:length_id)   { 'length-id' }
+      let(:length_obs)  { double FHIR::Observation, id: length_id, save: nil }
+      let(:mother_id)   { 'mother-id' }
+      let(:mother)      { double FHIR::RelatedPerson, id: mother_id }
+      let(:patient_id)  { 'patient-id' }
+      let(:patient)     { double FHIR::Patient, id: patient_id }
+      let(:weight_id)   { 'weight-id' }
+      let(:weight_obs)  { double FHIR::Observation, id: weight_id }
+
+      before(:each) do
+        allow(client).to receive(:begin_transaction)
+        allow(client).to receive(:add_transaction_request)
+        allow(client).to receive(:end_transaction)
+        allow(record).to receive(:birth_length_observation).and_return(length_obs)
+        allow(record).to receive(:birth_weight_observation).and_return(weight_obs)
+        allow(record).to receive(:mother_info).and_return(mother)
+        allow(record).to receive(:to_fhir).and_return(patient)
+        allow(record).to receive(:add_mother_to_patient)
+      end
+
+      it 'creates the patient record' do
+        expect(record).to receive(:to_fhir).and_call_original
+        record.save_to_fhir client
+      end
+
+      it 'creates the mother record' do
+        expect(record).to receive(:mother_info).and_call_original
+        record.save_to_fhir client
+      end
+
+      it 'creates the length observation' do
+        expect(record).to receive(:birth_length_observation).and_call_original
+        record.save_to_fhir client
+      end
+
+      it 'creates the weight observation' do
+        expect(record).to receive(:birth_weight_observation).and_call_original
+        record.save_to_fhir client
+      end
+
+      it 'saves the objects' do
+        expect(client).to receive(:begin_transaction)
+        expect(client).to receive(:add_transaction_request).with('POST', nil, patient)
+        expect(client).to receive(:add_transaction_request).with('POST', nil, mother)
+        expect(client).to receive(:add_transaction_request).with('POST', nil, length_obs)
+        expect(client).to receive(:add_transaction_request).with('POST', nil, weight_obs)
+        expect(client).to receive(:end_transaction)
+        record.save_to_fhir client
+      end
+
     end
   end
 end

@@ -28,5 +28,6 @@ module Artemis
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.fhir = config_for(:fhir)
   end
 end

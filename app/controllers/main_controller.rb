@@ -3,9 +3,10 @@ class MainController < ApplicationController
 
   # POST /fhir
   def fhir
+    Rails.logger.info "FHIR URL: #{config.fhir.server_url}"
     @records = record_params.map { |record| JSON.parse(record) }
 
-    if FhirSaveService.call @records, [true, false].sample
+    if FhirSaveService.call! @records
       redirect_back fallback_location: root_path, notice: 'Successfully saved to FHIR!'
     else
       redirect_back fallback_location: root_path, alert: 'Could not save to FHIR.'

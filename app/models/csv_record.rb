@@ -102,13 +102,7 @@ class CsvRecord < ActiveHash::Base
 
   def to_fhir
     create_patient.tap do |patient|
-      patient.id = SecureRandom.uuid
-      mother = mother_info patient
-      mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
-      link = FHIR::Patient::Link.new
-      link.other = mother_ref
-      link.type = 'refer'
-      patient.link.append link
+      patient.id = record[:kit]
     end
   end
 
@@ -117,6 +111,14 @@ class CsvRecord < ActiveHash::Base
       mother.patient = FHIR::Reference.new(reference: "Patient/#{patient.id}")
       mother.id = SecureRandom.uuid
     end
+  end
+
+  def add_mother_to_patient(mother, patient)
+    mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
+    link = FHIR::Patient::Link.new
+    link.other = mother_ref
+    link.type = 'refer'
+    patient.link.append link
   end
 
   def birth_length_observation(patient)
@@ -133,6 +135,23 @@ class CsvRecord < ActiveHash::Base
     reference.reference = "Patient/#{patient.id}"
     observation.subject = reference
     observation
+  end
+
+  def save_to_fhir client
+    Rails.logger.debug "saving #{record[:kit]}"
+    begin
+      patient = to_fhir
+
+      client.begin_transaction
+      client.add_transaction_request('POST', nil, patient)
+      client.add_transaction_request('POST', nil, mother_info(patient))
+      client.add_transaction_request('POST', nil, birth_weight_observation(patient))
+      client.add_transaction_request('POST', nil, birth_length_observation(patient))
+      client.end_transaction
+    rescue StandardError => e
+      Rails.logger.debug e.message
+      client
+    end
   end
 
   private

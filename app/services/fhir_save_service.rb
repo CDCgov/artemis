@@ -1,9 +1,10 @@
 class FhirSaveService < ApplicationService
-  def call!(records, result)
-    # TODO: plug into FHIR logic
-    raise StandardError, 'kaboom!' unless result
-    Rails.logger.info 'Attempting to save records'
-    Rails.logger.info records
+  def call!(records)
+    Rails.logger.info "FHIR URL: #{config.fhir.server_url}"
+    client = FHIR::Client.new(config.fhir.server_url)
+    records.each do |rec|
+      rec.save_to_fhir client
+    end
     true
   end
 end
