@@ -3,7 +3,7 @@ class MainController < ApplicationController
 
   # POST /fhir
   def fhir
-    Rails.logger.info "FHIR URL: #{config.fhir.server_url}"
+    Rails.logger.info "FHIR URL: #{ENV['FHIR_URL']}"
     @records = record_params.map { |record| JSON.parse(record) }
 
     if FhirSaveService.call @records

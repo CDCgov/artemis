@@ -102,7 +102,7 @@ class CsvRecord < ActiveHash::Base
 
   def to_fhir
     create_patient.tap do |patient|
-      patient.id = record[:kit]
+      patient.id = self[:kit]
     end
   end
 
@@ -138,7 +138,6 @@ class CsvRecord < ActiveHash::Base
   end
 
   def save_to_fhir client
-    Rails.logger.debug "saving #{record[:kit]}"
     begin
       patient = to_fhir
 
