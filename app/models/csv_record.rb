@@ -137,20 +137,15 @@ class CsvRecord < ActiveHash::Base
     observation
   end
 
-  def save_to_fhir client
-    begin
-      patient = to_fhir
+  def save_to_fhir(client)
+    patient = to_fhir
 
-      client.begin_transaction
-      client.add_transaction_request('POST', nil, patient)
-      client.add_transaction_request('POST', nil, mother_info(patient))
-      client.add_transaction_request('POST', nil, birth_weight_observation(patient))
-      client.add_transaction_request('POST', nil, birth_length_observation(patient))
-      client.end_transaction
-    rescue StandardError => e
-      Rails.logger.debug e.message
-      client
-    end
+    client.begin_transaction
+    client.add_transaction_request('POST', nil, patient)
+    client.add_transaction_request('POST', nil, mother_info(patient))
+    client.add_transaction_request('POST', nil, birth_weight_observation(patient))
+    client.add_transaction_request('POST', nil, birth_length_observation(patient))
+    client.end_transaction
   end
 
   private

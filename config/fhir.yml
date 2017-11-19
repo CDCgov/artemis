@@ -1,2 +1,11 @@
 default: &default
-  server_url: http://localhost:8080/baseDstu3
+  server_url: <%= ENV.fetch('FHIR_URL', 'http://localhost:8080/baseDstu3') %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

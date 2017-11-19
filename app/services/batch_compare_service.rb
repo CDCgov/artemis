@@ -14,7 +14,11 @@ class BatchCompareService < ApplicationService
 
   def call!
     Report.new requestor: @requestor,
-               data: { conflicts: conflicts },
+               data: {
+                 conflicts: conflicts,
+                 nbs: datasets.first,
+                 ovrs: datasets.second
+               },
                type: 'DiscrepancyReport'
   end
 
