@@ -100,7 +100,7 @@ class CsvRecord < ActiveHash::Base
     self.class.match(self, others, *args)
   end
 
-  def to_fhir
+  def patient_object
     create_patient.tap do |patient|
       patient.id = self[:kit]
     end
@@ -138,11 +138,13 @@ class CsvRecord < ActiveHash::Base
   end
 
   def save_to_fhir(client)
-    patient = to_fhir
+    patient = patient_object
+    mother = mother_info patient
+    add_mother_to_patient mother, patient
 
     client.begin_transaction
     client.add_transaction_request('POST', nil, patient)
-    client.add_transaction_request('POST', nil, mother_info(patient))
+    client.add_transaction_request('POST', nil, mother)
     client.add_transaction_request('POST', nil, birth_weight_observation(patient))
     client.add_transaction_request('POST', nil, birth_length_observation(patient))
     client.end_transaction

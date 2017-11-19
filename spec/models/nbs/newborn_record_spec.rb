@@ -53,15 +53,14 @@ RSpec.describe NBS::NewbornRecord, type: :model do
     end
   end
 
-
   describe 'fhir_elements' do
     let(:record) { described_class.find('UT850A020') }
     # UT850A020, Adams, John, 3/25/2015, M, Adams , 7/1/1977, 2807, 1, 24
-    let(:fhir_patient) { record.to_fhir }
+    let(:fhir_patient) { record.patient_object }
 
-    describe '#to_fhir' do
+    describe '#patient_object' do
       it 'returns a FHIR Patient' do
-        expect(record.to_fhir).to be_a(FHIR::Patient)
+        expect(record.patient_object).to be_a(FHIR::Patient)
       end
 
       it 'uses the record ID as the identifier' do
@@ -84,7 +83,6 @@ RSpec.describe NBS::NewbornRecord, type: :model do
       it 'fills in the multiple birth integer value' do
         expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
       end
-
 
       context 'gender is mapped properly when gender is' do
         before(:each) do
@@ -119,7 +117,7 @@ RSpec.describe NBS::NewbornRecord, type: :model do
     end
 
     describe '#add_mother_to_patient' do
-      let(:fhir_patient) { record.to_fhir }
+      let(:fhir_patient) { record.patient_object }
       let(:mother) { double('RelatedPerson', id: '12345') }
 
       it 'adds a reference to a RelatedPerson representing the mother' do
@@ -205,7 +203,6 @@ RSpec.describe NBS::NewbornRecord, type: :model do
     end
 
     describe '#save_to_fhir' do
-
       let(:client)      { double FHIR::Client }
       let(:length_id)   { 'length-id' }
       let(:length_obs)  { double FHIR::Observation, id: length_id, save: nil }
@@ -223,12 +220,12 @@ RSpec.describe NBS::NewbornRecord, type: :model do
         allow(record).to receive(:birth_length_observation).and_return(length_obs)
         allow(record).to receive(:birth_weight_observation).and_return(weight_obs)
         allow(record).to receive(:mother_info).and_return(mother)
-        allow(record).to receive(:to_fhir).and_return(patient)
+        allow(record).to receive(:patient_object).and_return(patient)
         allow(record).to receive(:add_mother_to_patient)
       end
 
       it 'creates the patient record' do
-        expect(record).to receive(:to_fhir).and_call_original
+        expect(record).to receive(:patient_object).and_call_original
         record.save_to_fhir client
       end
 
@@ -249,6 +246,7 @@ RSpec.describe NBS::NewbornRecord, type: :model do
 
       it 'saves the objects' do
         expect(client).to receive(:begin_transaction)
+        expect(client).to receive(:add_mother_to_patient).with(mother, patient)
         expect(client).to receive(:add_transaction_request).with('POST', nil, patient)
         expect(client).to receive(:add_transaction_request).with('POST', nil, mother)
         expect(client).to receive(:add_transaction_request).with('POST', nil, length_obs)
@@ -256,7 +254,6 @@ RSpec.describe NBS::NewbornRecord, type: :model do
         expect(client).to receive(:end_transaction)
         record.save_to_fhir client
       end
-
     end
   end
 end
