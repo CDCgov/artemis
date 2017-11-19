@@ -25,4 +25,21 @@ class Report < ApplicationRecord
       )
     end
   end
+
+  def nbs
+    @nbs ||= casted_records NBS::NewbornRecord
+  end
+
+  def ovrs
+    @ovrs ||= casted_records OVRS::NewbornRecord
+  end
+
+  private
+
+  def casted_records(model, key = nil)
+    key ||= model.try(:prefix).try(:downcase)
+    data.fetch(key, []).map do |record|
+      model.new record.fetch('attributes', {})
+    end
+  end
 end
