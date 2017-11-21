@@ -19,6 +19,8 @@ Newborn Screening Program and the Utah Office of Vital Records and Statistics.
 1. Ensure the correct versions of [Docker][docker] and [Docker Compose][compose]
    are installed per the [dependencies](#dependencies).
 2. Run `docker-compose up`.
+3. The application is at http://localhost:3000
+4. The associated FHIR instance is available at http://localhost:8080
 
 ## How To Set Up For Native (Local) Development
 
