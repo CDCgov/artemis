@@ -26,17 +26,39 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    # TODO: error-handling
-    ProcessCsvUploadService.call! nbs:  report_params[:nbs_file].read,
+    begin
+
+      ProcessCsvUploadService.call! nbs:  report_params[:nbs_file].read,
                                   ovrs: report_params[:ovrs_file].read
-
-    @report = BatchCompareService.call
-
-    if @report.save
-      redirect_to @report, notice: 'Report was successfully created.'
-    else
-      redirect_to new_report_path, alert: 'Could not generate a report.'
+    rescue => ex
+      logger.error ex.message
+      redirect_to new_report_path, alert: 'Failed to load files, csv format was not correct (csv headers may not be correct)'
+      return
     end
+    
+    begin
+
+      @report = BatchCompareService.call
+
+    rescue => ex
+      logger.error ex.message
+      redirect_to new_report_path, alert: 'Failed to compare records, an error occured'
+      return
+    end
+
+    begin
+      if @report.save
+
+         redirect_to @report, notice: 'Report was successfully created.'
+      
+      else
+        redirect_to new_report_path, alert: 'Could not generate a report.'
+      end
+    rescue => ex
+      logger.error ex.message
+      redirect_to new_report_path, alert: 'Failed to save report, an error occured'    
+    end
+
   end
 
   private
