@@ -13,6 +13,7 @@ services:
     depends_on:
       - setup
       - db
+      - fhir
   setup:
     build: .
     command: bundle exec rails db:setup

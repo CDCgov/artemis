@@ -41,4 +41,4 @@
 <%= link_to 'Back', reports_path %>
 <%= link_to 'Latest Report', latest_reports_path %>
 
-<%= button_to 'Save NBS to FHIR', fhir_path, method: :post, params: {records: @nbs} %>
+<%= button_to 'Save NBS to FHIR', report_fhir_path(report_id: @report), method: :post %>

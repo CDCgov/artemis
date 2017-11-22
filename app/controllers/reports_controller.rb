@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_report, only: %i[show fhir]
 
   # GET /reports
   # GET /reports.json
@@ -9,13 +9,20 @@ class ReportsController < ApplicationController
 
   # GET /reports/1
   # GET /reports/1.json
-  def show
-    @nbs = NBS::NewbornRecord.all.map(&:to_json)
-  end
+  def show; end
 
   # GET /reports/latest
   def latest
     redirect_to Report.last
+  end
+
+  # POST /reports/1/fhir
+  def fhir
+    if FhirSaveService.call @report.id
+      redirect_back fallback_location: root_path, notice: 'Successfully saved to FHIR!'
+    else
+      redirect_back fallback_location: root_path, alert: 'Could not save to FHIR.'
+    end
   end
 
   # GET /reports/new
@@ -68,6 +75,6 @@ class ReportsController < ApplicationController
   end
 
   def set_report
-    @report = Report.find(params[:id])
+    @report = Report.find(params[:id] || params[:report_id])
   end
 end

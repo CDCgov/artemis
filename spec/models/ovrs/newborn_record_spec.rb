@@ -32,11 +32,11 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
   describe '#to_fhir' do
     let(:record) { described_class.find('UT850A002') }
     # 2015  00135,UT850A002,Christmas,Merry,2015,12,8,F,Christmas,1985,1,8,2881,1,22
-    let(:fhir_patient) { record.to_fhir }
+    let(:fhir_patient) { record.patient_object }
 
     describe '#to_fhir' do
       it 'returns a FHIR Patient' do
-        expect(record.to_fhir).to be_a(FHIR::Patient)
+        expect(record.patient_object).to be_a(FHIR::Patient)
       end
 
       it 'uses the record ID as the identifier' do
@@ -65,7 +65,7 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
       end
 
       context 'mother linkage' do
-        let(:fhir_patient) { record.to_fhir }
+        let(:fhir_patient) { record.patient_object }
         let(:mother) { double('RelatedPerson', id: '12345') }
 
         before(:each) do

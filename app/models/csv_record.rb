@@ -100,15 +100,9 @@ class CsvRecord < ActiveHash::Base
     self.class.match(self, others, *args)
   end
 
-  def to_fhir
+  def patient_object
     create_patient.tap do |patient|
-      patient.id = SecureRandom.uuid
-      mother = mother_info patient
-      mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
-      link = FHIR::Patient::Link.new
-      link.other = mother_ref
-      link.type = 'refer'
-      patient.link.append link
+      patient.id = self[:kit]
     end
   end
 
@@ -117,6 +111,14 @@ class CsvRecord < ActiveHash::Base
       mother.patient = FHIR::Reference.new(reference: "Patient/#{patient.id}")
       mother.id = SecureRandom.uuid
     end
+  end
+
+  def add_mother_to_patient(mother, patient)
+    mother_ref = FHIR::Reference.new(reference: "RelatedPerson/#{mother.id}")
+    link = FHIR::Patient::Link.new
+    link.other = mother_ref
+    link.type = 'refer'
+    patient.link.append link
   end
 
   def birth_length_observation(patient)
@@ -133,6 +135,19 @@ class CsvRecord < ActiveHash::Base
     reference.reference = "Patient/#{patient.id}"
     observation.subject = reference
     observation
+  end
+
+  def save_to_fhir(client)
+    patient = patient_object
+    mother = mother_info patient
+    add_mother_to_patient mother, patient
+
+    client.begin_transaction
+    client.add_transaction_request('POST', nil, patient)
+    client.add_transaction_request('POST', nil, mother)
+    client.add_transaction_request('POST', nil, birth_weight_observation(patient))
+    client.add_transaction_request('POST', nil, birth_length_observation(patient))
+    client.end_transaction
   end
 
   private
