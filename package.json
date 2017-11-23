@@ -1,12 +1,16 @@
 {
   "name": "artemis",
   "private": true,
+  "scripts": {
+    "markdown-pdf": "markdown-pdf"
+  },
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
     "coffeescript": "1.12.7",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "markdown-pdf": "^8.0.0",
     "webpack-dev-server": "^2.9.3"
   }
 }
