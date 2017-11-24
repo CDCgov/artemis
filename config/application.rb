@@ -29,5 +29,12 @@ module Artemis
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.fhir = config_for(:fhir)
+
+    # Relative URL root
+    if ENV['RAILS_RELATIVE_URL_ROOT'].present?
+      root = ENV['RAILS_RELATIVE_URL_ROOT']
+      config.relative_url_root = root
+      config.action_controller.relative_url_root = root
+    end
   end
 end

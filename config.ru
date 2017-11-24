@@ -2,4 +2,6 @@
 
 require_relative 'config/environment'
 
-run Rails.application
+map ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/') do
+  run Rails.application
+end
