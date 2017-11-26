@@ -1,0 +1,13 @@
+Since this application was written to satisfy a very specific need of Utah's newborn screening program, there was not much research needed.
+
+We used the Utah newborn screening program's website to establish the initial requirements. 
+
+http://health.utah.gov/newbornscreening/
+
+Extensive use was made of the FHIR specifications to get the NBS records into a FHIR server
+
+http://hl7.org/fhir/
+
+Finally, since birth weight and length are observations, we found the LOINC code search useful.
+
+https://search.loinc.org/searchLOINC/search.zul
