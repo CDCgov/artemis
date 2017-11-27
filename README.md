@@ -22,6 +22,19 @@ Newborn Screening Program and the Utah Office of Vital Records and Statistics.
 3. The application is at http://localhost:3000
 4. The associated FHIR instance is available at http://localhost:8080
 
+## How To Deploy
+
+The main [Rails][rails] application can be deployed as a containerized
+application. The application can be configured with the following environment
+variables:
+
+| Variable                  | Description                                      |
+|---------------------------|--------------------------------------------------|
+| `DATABASE_URL`            | URL to PostgreSQL database. See: `database.yml`  |
+| `FHIR_URL`                | URL to FHIR server.                              |
+| `RAILS_ENV`               | Environment. Recommended: `production`           |
+| `RAILS_RELATIVE_URL_ROOT` | Deploy to a relative root. Example: `/app`       |
+
 ## How To Set Up For Native (Local) Development
 
 1. Ensure all the [dependencies](#dependencies) are installed.
