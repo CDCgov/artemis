@@ -4,7 +4,7 @@ Catalog
 ## General
 
 | Property     | Description                                                              |
-|=-------------|--------------------------------------------------------------------------|
+|--------------|--------------------------------------------------------------------------|
 | Team Name    | FHIRfighters                                                             |
 | Members      | Allan Reyes, Enrique Gonzalez, Phillip Birmingham, Reed Allred           |
 | Project Name | Artemis (Newborn Screening Data)                                         |
