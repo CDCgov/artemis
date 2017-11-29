@@ -246,7 +246,7 @@ RSpec.describe NBS::NewbornRecord, type: :model do
 
       it 'saves the objects' do
         expect(client).to receive(:begin_transaction)
-        expect(client).to receive(:add_mother_to_patient).with(mother, patient)
+        expect(record).to receive(:add_mother_to_patient).with(mother, patient)
         expect(client).to receive(:add_transaction_request).with('POST', nil, patient)
         expect(client).to receive(:add_transaction_request).with('POST', nil, mother)
         expect(client).to receive(:add_transaction_request).with('POST', nil, length_obs)
