@@ -1,0 +1,11 @@
+NewbornScreeningNumber,ChildLast,ChildFirst,BirthCCYY,BirthMM,BirthDD,Gender,MomLast,MomBirthCCYY,MomBirthMM,MomBirthDD,BirthWeightGrams,Plurality,ChildLengthCm
+UT850A001,Kirk,James,2015,3,2,M,Kirk,2000,1,1,3255,1,27
+UT850A002,Christmas,Merry,2015,12,8,F,Christmas,1985,1,8,2881,1,22
+UT850A003,Davis,Sammy,2016,1,1,M,Davis,1991,11,11,4082,1,23
+UT850A004,Snow,Holly,2015,12,10,F,Snow,1999,1,2,3200,1,26
+UT850A005,Short,Martin,2016,8,1,M,Short,1995,4,14,3345,1,27
+UT850A006,Crocket,Davey,2015,7,14,M,Explorer,1977,7,7,2268,1,25
+UT850A007,Tester,Boy,2015,8,3,M,Tester,1977,7,1,3175,1,24
+UT850A008,Jones,Shirley,2015,11,1,F,Jones,1980,1,1,3175,1,22
+UT850A009,Doe,John,2015,12,16,M,Doe,1988,8,8,3175,1,21
+UT850A010,Davis,Lauren,2015,3,26,F,Davis,1989,10,9,2722,1,19
