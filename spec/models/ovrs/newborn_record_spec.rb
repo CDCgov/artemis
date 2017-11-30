@@ -29,12 +29,12 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
     )
   end
 
-  describe '#to_fhir' do
+  describe '#fhir elements' do
     let(:record) { described_class.find('UT850A002') }
     # 2015  00135,UT850A002,Christmas,Merry,2015,12,8,F,Christmas,1985,1,8,2881,1,22
     let(:fhir_patient) { record.patient_object }
 
-    describe '#to_fhir' do
+    describe '#patient_object' do
       it 'returns a FHIR Patient' do
         expect(record.patient_object).to be_a(FHIR::Patient)
       end
@@ -56,28 +56,8 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
         expect(fhir_patient.birthDate).to eq(record[:birthdate])
       end
 
-      it 'fills in the kit number' do
-        expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
-      end
-
       it 'fills in the multiple birth integer value' do
         expect(fhir_patient.multipleBirthInteger).to eq(record[:multiple_birth])
-      end
-
-      context 'mother linkage' do
-        let(:fhir_patient) { record.patient_object }
-        let(:mother) { double('RelatedPerson', id: '12345') }
-
-        before(:each) do
-          allow(record).to receive(:mother_info).and_return(mother)
-        end
-
-        it 'adds a reference to a RelatedPerson representing the mother' do
-          expect(fhir_patient.link[0]).to be_a(FHIR::Patient::Link)
-          expect(
-            fhir_patient.link[0].other.reference
-          ).to eq("RelatedPerson/#{mother.id}")
-        end
       end
 
       context 'gender is mapped properly when gender is' do
@@ -112,6 +92,19 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
       end
     end
 
+    describe '#add_mother_to_patient' do
+      let(:fhir_patient) { record.patient_object }
+      let(:mother) { double('RelatedPerson', id: '12345') }
+
+      it 'adds a reference to a RelatedPerson representing the mother' do
+        record.add_mother_to_patient(mother, fhir_patient)
+        expect(fhir_patient.link[0]).to be_a(FHIR::Patient::Link)
+        expect(
+          fhir_patient.link[0].other.reference
+        ).to eq("RelatedPerson/#{mother.id}")
+      end
+    end
+
     describe '#mother_info' do
       let(:mother) { record.mother_info fhir_patient }
 
@@ -123,8 +116,8 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
         expect(mother.name[0].family).to eq(record[:mothers_last_name])
       end
 
-      it 'fills in the first name' do
-        expect(mother.name[0].given[0]).to eq(record[:mothers_first_name])
+      it 'does not fill in a first name' do
+        expect(mother.name[0].given).to be_empty
       end
 
       it 'links the mother to the patient' do
@@ -133,7 +126,7 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
       end
     end
 
-    describe '#birth_length' do
+    describe '#birth_length_observation' do
       let(:code) { '8305-5' }
       let(:observation) { record.birth_length_observation fhir_patient }
       it 'returns an observation' do
@@ -159,7 +152,7 @@ RSpec.describe OVRS::NewbornRecord, type: :model do
       end
     end
 
-    describe '#birth_weight' do
+    describe '#birth_weight_observation' do
       let(:code) { '56056-5' }
       let(:observation) { record.birth_weight_observation fhir_patient }
       it 'returns an observation for the birth weight' do
