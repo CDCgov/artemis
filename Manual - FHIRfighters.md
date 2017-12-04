@@ -32,38 +32,38 @@ Information of the project and team that worked on it:
 2. You should see the welcome page:  
 ![welcome]
 
-[welcome]: images/0.png "Welcome Page" { width:auto; max-width:80%; border: 1px solid; }
+[welcome]: manual_images/0.png "Welcome Page" { width:auto; max-width:80%; border: 1px solid; }
 3. To make a report click "Create Report" link:  
 ![create_report]
-[create_report]: images/1.png "Click create report" { width:auto; max-width:80%; border: 1px solid; }
+[create_report]: manual_images/1.png "Click create report" { width:auto; max-width:80%; border: 1px solid; }
 
 4. You will be taken to the report page:  
 ![report_page]
-[report_page]: images/2.png "Report Page" { width:auto; max-width:80%; border: 1px solid; }
+[report_page]: manual_images/2.png "Report Page" { width:auto; max-width:80%; border: 1px solid; }
 
 5. Click on the choose file for New Born Screening (NBS):  
 ![nbs]
-[nbs]: images/3.png "3" { width:auto; max-width:80%; border: 1px solid;}
+[nbs]: manual_images/3.png "3" { width:auto; max-width:80%; border: 1px solid;}
 
 6. Navigate to the CSV file for NBS:  
 
    _**Note** The file type must be CSV, and the columns must match the names listed in the [error section][#sec-errors-when-running-the-app]._  
 ![nbs_file]
-[nbs_file]: images/6.png "6" { width:auto; max-width:80%; border: 1px solid; }
+[nbs_file]: manual_images/6.png "6" { width:auto; max-width:80%; border: 1px solid; }
 7. Click on the choose file for Office of Vital records and statistics (OVRS):  
 ![OVRS]
-[OVRS]: images/4.png "4" { width:auto; max-width:80%; border: 1px solid;}
+[OVRS]: manual_images/4.png "4" { width:auto; max-width:80%; border: 1px solid;}
 8. Navigate to the CSV file for OVRS:  
 
    _**Note** The file type must be CSV, and the columns must match the names listed in the [error section][#sec-errors-when-running-the-app]._  
 ![ovrs_file]
 
-[ovrs_file]: images/7.png "7" { width:auto; max-width:80%; border: 1px solid; }
+[ovrs_file]: manual_images/7.png "7" { width:auto; max-width:80%; border: 1px solid; }
 
 9. Click on "Create Report" button to generate a report:  
 ![generate]
 
-[generate]: images/8.png "8" { width:auto; max-width:80%; border: 1px solid; }
+[generate]: manual_images/8.png "8" { width:auto; max-width:80%; border: 1px solid; }
 
 10. You will then be taken to the new discrepancy report:  
 
@@ -71,14 +71,14 @@ _**Note** See [error section][#sec-errors-when-running-the-app] for any issues. 
 
 ![d_report]
 
-[d_report]: images/9.png "9" { width:auto; max-width:80%; border: 1px solid;}
+[d_report]: manual_images/9.png "9" { width:auto; max-width:80%; border: 1px solid;}
 
 ## Errors when running the app
 
 When creating a new report, if the file is not a CSV file or the file format is not correct, any error will be seen like this:
 > Failed to load files, csv format was not correct (csv headers may not be correct)  
 ![error]  
-[error]: images/11.png "11" { width:auto; max-width:80%; border: 1px solid; }
+[error]: manual_images/11.png "11" { width:auto; max-width:80%; border: 1px solid; }
 
 To avoid errors with NBS and OVRS make sure you have these requirements in place:  
 
@@ -122,7 +122,7 @@ To avoid errors with NBS and OVRS make sure you have these requirements in place
 
 The top row consists of the report column labels. Each numbered row below shows an individual record in which the attributes show a discrepancy when compared by NBS and OVRS.  
 ![e1]
-[e1]: images/e1.png "e1" { width:auto; max-width:80%; border: 1px solid; }
+[e1]: manual_images/e1.png "e1" { width:auto; max-width:80%; border: 1px solid; }
 
 Here is a description of what each discrepancy report label means:  
 
@@ -135,12 +135,12 @@ Here is a description of what each discrepancy report label means:
 _(Looking at the first record found with a discrepancy)_  
 ![e2]
 
-[e2]: images/e2.png "e2" { width:auto; max-width:80%; border: 1px solid; }
+[e2]: manual_images/e2.png "e2" { width:auto; max-width:80%; border: 1px solid; }
 
 The Total number of discrepancy can be found at the bottom of the report:  
 ![e3]
 
-[e3]: images/e3.png "e3" { width:auto; max-width:80%; border: 1px solid; }
+[e3]: manual_images/e3.png "e3" { width:auto; max-width:80%; border: 1px solid; }
 
 ## Saving the discrepancy report to FHIR
 
@@ -149,34 +149,34 @@ To save a discrepancy report to FHIR, first [create a report][#sec-how-to-use-th
 Click on the bottom at the bottom of the report called "Save NBS to FHIR":  
 ![e6]
 
-[e6]: images/e6.png "Save NBS to FHIR" { width:auto; max-width:80%; border: 1px solid; }
+[e6]: manual_images/e6.png "Save NBS to FHIR" { width:auto; max-width:80%; border: 1px solid; }
 
 You will see this message "Successfully saved to FHIR!" once the data has been successfully saved:  
 ![e5]
 
-[e5]: images/e5.png "e5" { width:auto; max-width:80%; border: 1px solid; }
+[e5]: manual_images/e5.png "e5" { width:auto; max-width:80%; border: 1px solid; }
 
 _**Note:** The local FHIR app can be found at [http://localhost:8080]_.  
 ![FHIR]
 
-[FHIR]: images/FHIR.png "FHIR" { width:auto; max-width:80%; border: 1px solid; }
+[FHIR]: manual_images/FHIR.png "FHIR" { width:auto; max-width:80%; border: 1px solid; }
 
 ## View an already existing discrepancy report
 
 From the welcome page click on the "Report history" link.  
 ![h1]
 
-[h1]: images/h1.png "h1" { width:auto; max-width:80%; border: 1px solid; }
+[h1]: manual_images/h1.png "h1" { width:auto; max-width:80%; border: 1px solid; }
 
 You will then see all the history of the already created discrepancy reports.  
 ![h2]
 
-[h2]: images/h2.png "h2" { width:auto; max-width:80%; border: 1px solid; }
+[h2]: manual_images/h2.png "h2" { width:auto; max-width:80%; border: 1px solid; }
 
 Click on the "Show" link on the report you want to view.  
 ![h3]
 
-[h3]: images/h3.png "h3" { width:auto; max-width:80%; border: 1px solid; }
+[h3]: manual_images/h3.png "h3" { width:auto; max-width:80%; border: 1px solid; }
 
 
 
