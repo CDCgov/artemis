@@ -156,14 +156,13 @@ Click on the "Show" link on the report you want to view.
 
 The main Rails application can be deployed as a containerized application. The application can be configured with the following environment variables:
 
-|-------------------------|-------------------------------------------------|
-| Variable                | Description                                     |
-+-------------------------|:-----------------------------------------------:+
-| DATABASE_URL            | URL to PostgreSQL database. See: _database.yml_ |
-| FHIR_URL                | URL to FHIR server.                             |
-| RAILS_ENV	Environment.  | Recommended: production                         |
-| RAILS_RELATIVE_URL_ROOT | Deploy to a relative root. Example: /app        |
-|-------------------------|-------------------------------------------------|
+
+| Variable                  | Description                                      |
+|---------------------------|--------------------------------------------------|
+| `DATABASE_URL`            | URL to PostgreSQL database. See: `database.yml`  |
+| `FHIR_URL`                | URL to FHIR server.                              |
+| `RAILS_ENV`               | Environment. Recommended: `production`           |
+| `RAILS_RELATIVE_URL_ROOT` | Deploy to a relative root. Example: `/app`       |
 
 ## How To Set Up For Native (Local) Development
 
