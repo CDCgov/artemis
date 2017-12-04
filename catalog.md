@@ -8,7 +8,7 @@ Catalog
 | Team Name    | FHIRfighters                                                             |
 | Members      | Allan Reyes, Enrique Gonzalez, Phillip Birmingham, Reed Allred           |
 | Project Name | Artemis (Newborn Screening Data)                                         |
-| Repository   | https://github.gatech.edu/gt-hit-fall2017/Newborn-Screening-Data-on-FHIR |
+| Repository   | https://github.com/CDCgov/GaTech-Fall2017-Newborn-FHIRFighters           |
 
 ## Table of Contents
 
