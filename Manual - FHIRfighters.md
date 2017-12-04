@@ -1,11 +1,3 @@
-Title         : Manual
-Author        : _by Team FHIRfighters_
-Logo          : False
-
-[TITLE]
-
-[TOC]
-
 # General 
 
 Information of the project and team that worked on it:
@@ -19,8 +11,8 @@ Information of the project and team that worked on it:
 
 ## How To Run The App
 
-1. [Clone repository][#sec-how-to-clone-the-repository] ([https://github.com/CDCgov/GaTech-Fall2017-Newborn-FHIRFighters])
-2. Ensure the correct versions of Docker and Docker Compose are installed per the [dependencies][#sec-dependencies].
+1. Clone repository ([https://github.com/CDCgov/GaTech-Fall2017-Newborn-FHIRFighters], also see how to clone the repository in the "How to clone the Repository" section)
+2. Ensure the correct versions of Docker and Docker Compose are installed per the dependencies.
 3. Run `docker-compose up`
 4. The application is at [http://localhost:3000]
 5. The associated FHIR instance is available at [http://localhost:8080]
@@ -44,7 +36,7 @@ Information of the project and team that worked on it:
 
 6. Navigate to the CSV file for NBS:  
 
-   _**Note** The file type must be CSV, and the columns must match the names listed in the [error section][#sec-errors-when-running-the-app]._  
+   _**Note** The file type must be CSV, and the columns must match the names listed in the error section._  
 ![](docs/images/manual_images/6.png)
 
 7. Click on the choose file for Office of Vital records and statistics (OVRS):  
@@ -52,7 +44,7 @@ Information of the project and team that worked on it:
 
 8. Navigate to the CSV file for OVRS:  
 
-   _**Note** The file type must be CSV, and the columns must match the names listed in the [error section][#sec-errors-when-running-the-app]._  
+   _**Note** The file type must be CSV, and the columns must match the names listed in the error section._  
 ![](docs/images/manual_images/7.png)
 
 
@@ -61,7 +53,7 @@ Information of the project and team that worked on it:
 
 10. You will then be taken to the new discrepancy report:  
 
-_**Note** See [error section][#sec-errors-when-running-the-app] for any issues. Also see [how to read a report section][#sec-how-to-read-a-report] to further understand the report._
+_**Note** See error section for any issues. Also see how to read a report section to further understand the report._
 
 ![](docs/images/manual_images/9.png)
 
@@ -132,7 +124,7 @@ The Total number of discrepancy can be found at the bottom of the report:
 
 ## Saving the discrepancy report to FHIR
 
-To save a discrepancy report to FHIR, first [create a report][#sec-how-to-use-the-app-to-generate-a-report] or go into an [already created report][#sec-saving-the-discrepancy-report-to-fhir].
+To save a discrepancy report to FHIR, first create a report or go into an already created report.
 
 Click on the bottom at the bottom of the report called "Save NBS to FHIR":  
 ![](docs/images/manual_images/e6.png)
@@ -175,13 +167,13 @@ The main Rails application can be deployed as a containerized application. The a
 
 ## How To Set Up For Native (Local) Development
 
-Ensure all the [dependencies][#sec-dependencies] are installed.
+Ensure all the dependencies are installed.
 Run bin/setup.
 Run bin/rails server.
 
 ## How To Test
 
-Ensure all the [dependencies][#sec-dependencies] are installed.
+Ensure all the dependencies are installed.
 Run bin/test.
 
 # Informational
