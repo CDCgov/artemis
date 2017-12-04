@@ -172,8 +172,8 @@ Run bin/rails server.
 
 ## How To Test
 
-Ensure all the dependencies are installed.
-Run bin/test.
+* Ensure all the dependencies are installed.
+* Run bin/test.
 
 # Informational
 
