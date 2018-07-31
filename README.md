@@ -46,6 +46,12 @@ variables:
 1. Ensure all the [dependencies](#dependencies) are installed.
 2. Run `bin/test`.
 
+## How To Upgrade Packages
+
+- For JavaScript packages, run `yarn add some_package@1.2.3`.
+- For Ruby gems, run `bundle update some_package`.
+- Ensure that the respective `.lock` files are updated and added to source control.
+
 ## Dependencies
 
 This is a [Rails v5.1.4][rails] application that requires:
